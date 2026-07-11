@@ -1,0 +1,75 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*----------------------RESET--------------------*/
+
+
+/*----------------------RESET--------------------*/
+/*
+.box{position:relative; float:right; width:300px; padding:10px; margin:10px; background:#DCF1F1; border:1px solid #CDE2ED;}
+
+.global-div{width:900px; height:auto; min-height:300px; padding:0 15px 15px 15px; position:absolute; float:none; left:50%;  margin:5px 0 0 -470px ; border:5px solid #fff; background:#fff; box-shadow:0 0 5px #999; -moz-box-shadow:0 0 5px #999; -webkit-box-shadow:0 0 5px #999; }
+
+.global-div img{float:left; margin-right:20px; border:1px solid #eaeaea; z-index:500; }
+
+h1{font:italic 4em Georgia, "Times New Roman", Times, serif; text-align:center; margin: -5px -20px 20px -20px; background:#111; color:#fff; padding:15px 5px; letter-spacing:-0.04em; text-shadow:1px 1px 5px #000; font-weight:normal;}
+
+h2{font:3em Georgia, "Times New Roman", Times, serif;}
+
+
+.paginacao a{color:#333; padding:3px 5px; border:1px solid #ccc; text-decoration:none; margin:0 3px;}
+
+.paginacao a:hover{background:#333; color:#fff;}
+
+.paginacao a.atual{font-weight:bold; background:#fff; color:#333; border:0; border-bottom:1px solid #ccc; font-size:1.6em;}
+*/
+/** Paginator **/
+.tm-paginator {
+  text-align: center;
+  display: inline-block;
+  width: 100%;
+}
+.tm-paginator .page-numbers {
+  width: 32px;
+  height: 32px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+  border-radius: 2px;
+  background: #000000;
+  color: #ffffff;
+  text-align: center;
+  line-height: 32px;
+  display: inline-block;
+}
+.tm-paginator .page-numbers:hover {
+  background: #a51d23;
+}
+.tm-paginator .current {
+  background: #a51d23;
+}
+
+.tm-paginator .next,
+.tm-paginator .prev {
+  background: #cccccc;
+  overflow: hidden;
+}
+.tm-paginator .next:before,
+.tm-paginator .prev:before {
+  content: "\f105";
+  display: block;
+  font-family: 'FontAwesome';
+  font-style: normal;
+  font-weight: normal;
+  line-height: 32px;
+}
+.tm-paginator .prev {
+  float: left;
+}
+.tm-paginator .prev:before {
+  content: "\f104";
+}
+.tm-paginator .next {
+  float: right;
+}

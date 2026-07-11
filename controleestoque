@@ -1,0 +1,768 @@
+-- MySQL Administrator dump 1.4
+--
+-- ------------------------------------------------------
+-- Server version	5.5.34
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
+
+--
+-- Create schema controleestoque
+--
+
+CREATE DATABASE IF NOT EXISTS controleestoque;
+USE controleestoque;
+
+--
+-- Definition of table `logs`
+--
+
+DROP TABLE IF EXISTS `logs`;
+CREATE TABLE `logs` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `data` date NOT NULL,
+  `hora` time NOT NULL,
+  `ip` varchar(15) COLLATE latin1_general_ci NOT NULL,
+  `mensagem` text COLLATE latin1_general_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `hora` (`data`)
+) ENGINE=MyISAM AUTO_INCREMENT=36 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+
+--
+-- Dumping data for table `logs`
+--
+
+/*!40000 ALTER TABLE `logs` DISABLE KEYS */;
+INSERT INTO `logs` (`id`,`data`,`hora`,`ip`,`mensagem`) VALUES 
+ (1,'2015-08-29','13:35:00','127.0.0.1','Etevaldo Jales -  EXCLUIU O USUARIO Analia Jales'),
+ (2,'2015-09-01','00:39:00','127.0.0.1','Etevaldo Jales -  CADASTROU A MARCA: MR2'),
+ (3,'2015-09-01','00:39:00','127.0.0.1','Etevaldo Jales -  CADASTROU O FORNECEDOR: R2 DISTRIBUIDORA'),
+ (4,'2015-09-01','00:40:00','127.0.0.1','Etevaldo Jales -  CADASTROU A CATEGORIA: MASCULINA'),
+ (5,'2015-09-01','00:41:00','127.0.0.1','Etevaldo Jales -  CADASTROU ENTRADA NO ESTOQUE O PRODUTO: Cal?a Jeans, QUANTIDADE: 20'),
+ (6,'2015-09-01','00:42:00','127.0.0.1','Etevaldo Jales -  CADASTROU ENTRADA NO ESTOQUE O PRODUTO: Bermuda Jeans, QUANTIDADE: 25'),
+ (7,'2015-09-01','00:42:00','127.0.0.1','Etevaldo Jales -  ALTEROU O PRODUTO DE: Calça Jeans PARA Cal?a Jeans'),
+ (8,'2015-09-01','01:30:00','127.0.0.1','Etevaldo Jales -  CADASTROU O CLIENTE: Etevaldo Jales, ENDERE?O: Rua Humberto Lomeu 3159, TELEFONE: (85) 9894-9774, EMAIL: etevaldojales@gmail.com'),
+ (9,'2015-09-01','01:31:00','127.0.0.1','Etevaldo Jales -  CADASTROU O CLIENTE: Maria An?lia, ENDERE?O: Rua Humberto Lomeu, 3159, TELEFONE: (85) 3294-2735, EMAIL: larissa_dos_santos_luz@hotmail.com'),
+ (10,'2015-09-04','23:44:00','127.0.0.1','Etevaldo Jales -  CADASTROU O PEDIDO NUMERO: 2| CLIENTE: Maria Anália| DATA DO PEDIDO: 04/09/2015| VALOR DO PEDIDO: 1.800,00| PRODUTOS: C345(10), B789(15), '),
+ (11,'2015-09-04','23:47:00','127.0.0.1','Etevaldo Jales -  DEU BAIXA NA PARCELA DE VENCIMENTO: 04/10/2015, NO VALOR DE: 450,00, FORMA DE PAGAMENTO: Dinheiro, CLIENTE: Maria Anália'),
+ (12,'2015-09-04','23:55:00','127.0.0.1','Etevaldo Jales -  EXCLUIU O USUARIO Jorge Lins'),
+ (13,'2015-09-05','00:26:00','127.0.0.1','Etevaldo Jales -  CADASTROU SAÍDA NO ESTOQUE O PRODUTO: C345, QUANTIDADE: 5'),
+ (14,'2015-09-12','22:54:00','127.0.0.1','Etevaldo Jales -  CADASTROU A CATEGORIA: teste'),
+ (15,'2015-09-12','22:54:00','127.0.0.1','Etevaldo Jales -  ALTEROU A CATEGORIA DE: teste PARA testerfewrwe'),
+ (16,'2015-09-12','22:54:00','127.0.0.1','Etevaldo Jales -  EXCLUIU A CATEGORIA: testerfewrwe'),
+ (17,'2015-09-12','22:58:00','127.0.0.1','Etevaldo Jales -  CADASTROU O PEDIDO NUMERO: 3| CLIENTE: Maria Anália| DATA DO PEDIDO: 12/09/2015| VALOR DO PEDIDO: 245,00| PRODUTOS: C345(3), B789(1), '),
+ (18,'2015-09-12','23:00:00','127.0.0.1','Etevaldo Jales -  DEU BAIXA NA PARCELA DE VENCIMENTO: 10/10/2015, NO VALOR DE: 122,50, FORMA DE PAGAMENTO: Dinheiro, CLIENTE: Maria Anália'),
+ (19,'2015-09-12','23:03:00','127.0.0.1','Etevaldo Jales -  CADASTROU ENTRADA NO ESTOQUE O PRODUTO: C345, QUANTIDADE: 50'),
+ (20,'2015-09-22','00:47:00','127.0.0.1','Etevaldo Jales -  CADASTROU O PEDIDO NUMERO: 4| CLIENTE: Maria Anália| DATA DO PEDIDO: 22/09/2015| VALOR DO PEDIDO: 1.068,60| PRODUTOS: C345(6), B789(8), '),
+ (21,'2015-09-22','00:49:00','127.0.0.1','Etevaldo Jales -  DEU BAIXA NA PARCELA DE VENCIMENTO: 21/10/2015, NO VALOR DE: 356,20, FORMA DE PAGAMENTO: Dinheiro, CLIENTE: Maria Anália'),
+ (22,'2015-10-10','13:58:00','127.0.0.1','Etevaldo Jales -  CADASTROU A CATEGORIA: Teste'),
+ (23,'2015-10-10','13:58:00','127.0.0.1','Etevaldo Jales -  ALTEROU A CATEGORIA DE: Teste PARA Testefgfdgdg'),
+ (24,'2015-10-10','13:58:00','127.0.0.1','Etevaldo Jales -  EXCLUIU A CATEGORIA: Testefgfdgdg'),
+ (25,'2015-10-10','14:00:00','127.0.0.1','Etevaldo Jales -  CADASTROU ENTRADA NO ESTOQUE O PRODUTO: Perfume, QUANTIDADE: 30'),
+ (26,'2015-10-10','14:03:00','127.0.0.1','Etevaldo Jales -  CADASTROU O PEDIDO NUMERO: 5| CLIENTE: Maria Anália| DATA DO PEDIDO: 10/10/2015| VALOR DO PEDIDO: 904,80| PRODUTOS: P-45(10), B789(1), '),
+ (27,'2015-10-10','14:04:00','127.0.0.1','Etevaldo Jales -  RECEBEU ENTRADA NO VALOR DE: 100,00, FORMA DE PAGAMENTO: Dinheiro, CLIENTE: '),
+ (28,'2015-10-10','14:04:00','127.0.0.1','Etevaldo Jales -  RECEBEU ENTRADA NO VALOR DE: 100,00, FORMA DE PAGAMENTO: Dinheiro, CLIENTE: '),
+ (29,'2015-10-10','14:10:00','127.0.0.1','Etevaldo Jales -  CADASTROU ENTRADA NO ESTOQUE O PRODUTO: B789, QUANTIDADE: 60'),
+ (30,'2015-10-21','23:09:00','127.0.0.1','Etevaldo Jales -  CADASTROU SAÍDA NO ESTOQUE O PRODUTO: P-45, QUANTIDADE: 20'),
+ (31,'2015-10-21','23:12:00','127.0.0.1','Etevaldo Jales -  CADASTROU ENTRADA NO ESTOQUE O PRODUTO: P-45, QUANTIDADE: 20'),
+ (32,'2015-10-24','14:30:00','127.0.0.1','Etevaldo Jales -  CADASTROU O PEDIDO NUMERO: 6| CLIENTE: Maria Anália| DATA DO PEDIDO: 24/10/2015| VALOR DO PEDIDO: 461,80| PRODUTOS: C345(5), P-45(2), '),
+ (33,'2015-11-13','22:44:00','127.0.0.1','Etevaldo Jales -  CADASTROU O PEDIDO NUMERO: 1| CLIENTE: Etevaldo Jales| DATA DO PEDIDO: 13/11/2015| VALOR DO PEDIDO: 925,00| PRODUTOS: C345(10), B789(5), '),
+ (34,'2015-11-13','22:47:00','127.0.0.1','Etevaldo Jales -  RECEBEU ENTRADA NO VALOR DE: 150,00, FORMA DE PAGAMENTO: Dinheiro, CLIENTE: '),
+ (35,'2015-11-13','22:47:00','127.0.0.1','Etevaldo Jales -  RECEBEU ENTRADA NO VALOR DE: 150,00, FORMA DE PAGAMENTO: Dinheiro, CLIENTE: ');
+/*!40000 ALTER TABLE `logs` ENABLE KEYS */;
+
+
+--
+-- Definition of table `produto_fornecedor`
+--
+
+DROP TABLE IF EXISTS `produto_fornecedor`;
+CREATE TABLE `produto_fornecedor` (
+  `id_produto` int(10) unsigned NOT NULL,
+  `id_fornecedor` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id_produto`,`id_fornecedor`),
+  KEY `tblproduto_has_tblfornecedor_FKIndex1` (`id_produto`),
+  KEY `tblproduto_has_tblfornecedor_FKIndex2` (`id_fornecedor`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `produto_fornecedor`
+--
+
+/*!40000 ALTER TABLE `produto_fornecedor` DISABLE KEYS */;
+/*!40000 ALTER TABLE `produto_fornecedor` ENABLE KEYS */;
+
+
+--
+-- Definition of table `secoes`
+--
+
+DROP TABLE IF EXISTS `secoes`;
+CREATE TABLE `secoes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `secao` varchar(100) NOT NULL,
+  `url` varchar(100) DEFAULT NULL,
+  `posicao` int(11) NOT NULL DEFAULT '0',
+  `icone` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `secoes`
+--
+
+/*!40000 ALTER TABLE `secoes` DISABLE KEYS */;
+INSERT INTO `secoes` (`id`,`secao`,`url`,`posicao`,`icone`) VALUES 
+ (1,'Usuários','usuario.php',7,'icon-cog'),
+ (3,'Clientes','',4,'icon-user'),
+ (2,'Cadastrar Produtos','produtos_cadastrar.php',2,'icon-gift'),
+ (4,'Pedidos','index.php',3,'icon-shopping-cart'),
+ (5,'Relatórios','',6,'icon-pencil'),
+ (7,'Estoque','',1,'icon-th-large'),
+ (8,'Cadastros',NULL,5,'icon-cogs'),
+ (9,'Auditoria','logs.php',8,'icon-comment');
+/*!40000 ALTER TABLE `secoes` ENABLE KEYS */;
+
+
+--
+-- Definition of table `subsecoes`
+--
+
+DROP TABLE IF EXISTS `subsecoes`;
+CREATE TABLE `subsecoes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_secao` varchar(11) NOT NULL,
+  `subsecao` varchar(100) NOT NULL,
+  `url` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `subsecoes`
+--
+
+/*!40000 ALTER TABLE `subsecoes` DISABLE KEYS */;
+INSERT INTO `subsecoes` (`id`,`id_secao`,`subsecao`,`url`) VALUES 
+ (1,'3','Cadastrar','clientes.php'),
+ (2,'3','Vendas Realizadas','vendas_realizadas.php'),
+ (3,'8','Categorias','categorias.php'),
+ (4,'8','Fornecedores','fornecedor.php'),
+ (5,'8','Marcas','marcas.php'),
+ (6,'7','Cadastrar','estoque_cadastrar.php'),
+ (7,'7','Listar','estoque_listar.php'),
+ (8,'5','Rel. Movimento','relatorios.php'),
+ (9,'5','Prev. Receita','rel_prev_receitas.php'),
+ (10,'5','Parc. Vencida','rel_parc_vencida.php'),
+ (11,'5','Rel. Baixa','rel_baixa.php'),
+ (12,'8','Bancos','bancos.php');
+/*!40000 ALTER TABLE `subsecoes` ENABLE KEYS */;
+
+
+--
+-- Definition of table `tblbancos`
+--
+
+DROP TABLE IF EXISTS `tblbancos`;
+CREATE TABLE `tblbancos` (
+  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `funcao` varchar(60) DEFAULT NULL,
+  `layout` varchar(60) DEFAULT NULL,
+  `stselecionado` smallint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tblbancos`
+--
+
+/*!40000 ALTER TABLE `tblbancos` DISABLE KEYS */;
+INSERT INTO `tblbancos` (`id`,`funcao`,`layout`,`stselecionado`) VALUES 
+ (1,'include/funcoes_bb.php','include/layout_bb.php',0),
+ (2,'include/funcoes_cef.php','include/layout_cef.php',0),
+ (3,'include/funcoes_bradesco.php','include/layout_bradesco.php',0),
+ (4,'include/funcoes_itau.php','include/layout_itau.php',1),
+ (5,'include/funcoes_hsbc.php','include/layout_hsbc.php',0),
+ (6,'include/funcoes_real.php','include/layout_real.php',0),
+ (7,'include/funcoes_banespa.php','include/layout_banespa.php',0),
+ (8,'include/funcoes_banestes.php','include/layout_banestes.php',0),
+ (9,'include/funcoes_nossacaixa.php','include/layout_nossacaixa.php',0),
+ (10,'include/funcoes_bancoob.php','include/layout_bancoob.php',0),
+ (11,'include/funcoes_besc.php','include/layout_besc.php',0),
+ (12,'include/funcoes_santander_banespa.php','include/layout_santander_banespa.php',0),
+ (13,'include/funcoes_sicredi.php','include/layout_sicredi.php',0),
+ (14,'include/funcoes_sudameris.php','include/layout_sudameris.php',0),
+ (15,'include/funcoes_unibanco.php','include/funcoes_unibanco.php',0),
+ (16,NULL,NULL,0);
+/*!40000 ALTER TABLE `tblbancos` ENABLE KEYS */;
+
+
+--
+-- Definition of table `tblcategoria`
+--
+
+DROP TABLE IF EXISTS `tblcategoria`;
+CREATE TABLE `tblcategoria` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(150) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tblcategoria`
+--
+
+/*!40000 ALTER TABLE `tblcategoria` DISABLE KEYS */;
+INSERT INTO `tblcategoria` (`id`,`descricao`) VALUES 
+ (1,'MASCULINA');
+/*!40000 ALTER TABLE `tblcategoria` ENABLE KEYS */;
+
+
+--
+-- Definition of table `tblcliente`
+--
+
+DROP TABLE IF EXISTS `tblcliente`;
+CREATE TABLE `tblcliente` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `nome` varchar(100) DEFAULT NULL,
+  `telefone` varchar(30) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `endereco` varchar(200) DEFAULT NULL,
+  `stativo` smallint(1) NOT NULL DEFAULT '0' COMMENT '0: Inativo; 1: Ativo',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tblcliente`
+--
+
+/*!40000 ALTER TABLE `tblcliente` DISABLE KEYS */;
+INSERT INTO `tblcliente` (`id`,`nome`,`telefone`,`email`,`endereco`,`stativo`) VALUES 
+ (1,'Etevaldo Jales','(85) 9894-9774','etevaldojales@gmail.com','Rua Humberto Lomeu 3159',1),
+ (2,'Maria Anália','(85) 3294-2735','larissa_dos_santos_luz@hotmail.com','Rua Humberto Lomeu, 3159',1);
+/*!40000 ALTER TABLE `tblcliente` ENABLE KEYS */;
+
+
+--
+-- Definition of table `tblcredito`
+--
+
+DROP TABLE IF EXISTS `tblcredito`;
+CREATE TABLE `tblcredito` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_cliente` int(11) NOT NULL,
+  `valor` float NOT NULL DEFAULT '0',
+  `saldo` float NOT NULL DEFAULT '0',
+  `data` date NOT NULL,
+  `stcredito` smallint(1) DEFAULT '0' COMMENT '1: Credito; 2: Debito',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tblcredito`
+--
+
+/*!40000 ALTER TABLE `tblcredito` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tblcredito` ENABLE KEYS */;
+
+
+--
+-- Definition of table `tblempresa`
+--
+
+DROP TABLE IF EXISTS `tblempresa`;
+CREATE TABLE `tblempresa` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tblempresa`
+--
+
+/*!40000 ALTER TABLE `tblempresa` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tblempresa` ENABLE KEYS */;
+
+
+--
+-- Definition of table `tblentrada`
+--
+
+DROP TABLE IF EXISTS `tblentrada`;
+CREATE TABLE `tblentrada` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_usuario` int(11) NOT NULL,
+  `id_pedido` int(11) NOT NULL,
+  `id_forma_pag` int(5) NOT NULL,
+  `valor` float NOT NULL,
+  `vencimento` date NOT NULL,
+  `valor_pag` float DEFAULT NULL,
+  `data_pgto` date DEFAULT NULL,
+  `valor_rec` float DEFAULT NULL,
+  `multa` float DEFAULT NULL,
+  `juros` float DEFAULT NULL,
+  `flgstatus` smallint(2) NOT NULL COMMENT '1: Pendente; Pago',
+  `recibo` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tblentrada`
+--
+
+/*!40000 ALTER TABLE `tblentrada` DISABLE KEYS */;
+INSERT INTO `tblentrada` (`id`,`id_usuario`,`id_pedido`,`id_forma_pag`,`valor`,`vencimento`,`valor_pag`,`data_pgto`,`valor_rec`,`multa`,`juros`,`flgstatus`,`recibo`) VALUES 
+ (1,1,5,4,100,'2015-10-10',100,'2015-10-10',100,0,0,2,'01'),
+ (2,1,1,4,150,'2015-11-13',150,'2015-11-13',150,0,0,2,'001');
+/*!40000 ALTER TABLE `tblentrada` ENABLE KEYS */;
+
+
+--
+-- Definition of table `tblestoque`
+--
+
+DROP TABLE IF EXISTS `tblestoque`;
+CREATE TABLE `tblestoque` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id_produto` int(10) unsigned NOT NULL,
+  `qtdentrada` int(10) unsigned DEFAULT NULL,
+  `qtdsaida` int(10) unsigned DEFAULT NULL,
+  `estoque_minimo` int(6) DEFAULT '0',
+  `qtdacumulado` int(10) unsigned DEFAULT NULL,
+  `data` date DEFAULT NULL,
+  `cor` varchar(50) NOT NULL,
+  `tamanho` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `tblestoque_FKIndex1` (`id_produto`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tblestoque`
+--
+
+/*!40000 ALTER TABLE `tblestoque` DISABLE KEYS */;
+INSERT INTO `tblestoque` (`id`,`id_produto`,`qtdentrada`,`qtdsaida`,`estoque_minimo`,`qtdacumulado`,`data`,`cor`,`tamanho`) VALUES 
+ (1,1,20,0,8,20,'2015-09-01','',''),
+ (2,2,25,0,5,25,'2015-09-01','',''),
+ (3,1,0,10,0,10,'2015-09-04','',''),
+ (4,2,0,15,0,10,'2015-09-04','',''),
+ (5,1,0,5,8,5,'2015-09-05','',''),
+ (6,1,0,3,0,2,'2015-09-12','',''),
+ (7,2,0,1,0,9,'2015-09-12','',''),
+ (8,1,50,0,8,52,'2015-09-12','',''),
+ (9,1,0,6,0,46,'2015-09-22','',''),
+ (10,2,0,8,0,1,'2015-09-22','',''),
+ (11,3,30,0,10,30,'2015-10-10','',''),
+ (12,3,0,10,0,20,'2015-10-10','',''),
+ (13,2,0,1,0,0,'2015-10-10','',''),
+ (14,2,60,0,5,60,'2015-10-10','',''),
+ (15,3,0,20,10,0,'2015-10-21','',''),
+ (16,3,20,0,10,20,'2015-10-21','',''),
+ (17,1,0,5,0,41,'2015-10-24','',''),
+ (18,3,0,2,0,18,'2015-10-24','',''),
+ (19,1,0,10,0,31,'2015-11-13','',''),
+ (20,2,0,5,0,55,'2015-11-13','','');
+/*!40000 ALTER TABLE `tblestoque` ENABLE KEYS */;
+
+
+--
+-- Definition of table `tblformapagamento`
+--
+
+DROP TABLE IF EXISTS `tblformapagamento`;
+CREATE TABLE `tblformapagamento` (
+  `id` int(6) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(60) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tblformapagamento`
+--
+
+/*!40000 ALTER TABLE `tblformapagamento` DISABLE KEYS */;
+INSERT INTO `tblformapagamento` (`id`,`descricao`) VALUES 
+ (1,'Boleto'),
+ (2,'Cartão de crédito'),
+ (3,'Cheque'),
+ (4,'Dinheiro'),
+ (5,'PagSeguro'),
+ (6,'Cartão (Débito)');
+/*!40000 ALTER TABLE `tblformapagamento` ENABLE KEYS */;
+
+
+--
+-- Definition of table `tblfornecedor`
+--
+
+DROP TABLE IF EXISTS `tblfornecedor`;
+CREATE TABLE `tblfornecedor` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tblfornecedor`
+--
+
+/*!40000 ALTER TABLE `tblfornecedor` DISABLE KEYS */;
+INSERT INTO `tblfornecedor` (`id`,`descricao`) VALUES 
+ (1,'R2 DISTRIBUIDORA');
+/*!40000 ALTER TABLE `tblfornecedor` ENABLE KEYS */;
+
+
+--
+-- Definition of table `tblitenspedido`
+--
+
+DROP TABLE IF EXISTS `tblitenspedido`;
+CREATE TABLE `tblitenspedido` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id_produto` int(10) unsigned NOT NULL,
+  `id_pedido` int(10) unsigned NOT NULL,
+  `quantidade` int(10) unsigned DEFAULT NULL,
+  `valor_unitario_compra` float DEFAULT '0',
+  `valor_unitario` float DEFAULT NULL,
+  `valor_total` float DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `tblitenspedido_FKIndex1` (`id_pedido`),
+  KEY `tblitenspedido_FKIndex2` (`id_produto`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tblitenspedido`
+--
+
+/*!40000 ALTER TABLE `tblitenspedido` DISABLE KEYS */;
+INSERT INTO `tblitenspedido` (`id`,`id_produto`,`id_pedido`,`quantidade`,`valor_unitario_compra`,`valor_unitario`,`valor_total`) VALUES 
+ (1,1,2,10,45,75,750),
+ (2,2,2,15,50,70,1050),
+ (3,1,3,3,45,60,180),
+ (4,2,3,1,50,65,65),
+ (13,1,4,6,45,71.5,429),
+ (14,2,4,8,50,79.95,639.6),
+ (15,3,5,10,68,83.98,839.8),
+ (16,2,5,1,50,65,65),
+ (18,1,6,5,45,57,285),
+ (19,3,6,2,68,88.4,176.8),
+ (20,1,1,10,45,60,600),
+ (21,2,1,5,50,65,325);
+/*!40000 ALTER TABLE `tblitenspedido` ENABLE KEYS */;
+
+
+--
+-- Definition of table `tblmarca`
+--
+
+DROP TABLE IF EXISTS `tblmarca`;
+CREATE TABLE `tblmarca` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tblmarca`
+--
+
+/*!40000 ALTER TABLE `tblmarca` DISABLE KEYS */;
+INSERT INTO `tblmarca` (`id`,`descricao`) VALUES 
+ (1,'MR2');
+/*!40000 ALTER TABLE `tblmarca` ENABLE KEYS */;
+
+
+--
+-- Definition of table `tblparcela`
+--
+
+DROP TABLE IF EXISTS `tblparcela`;
+CREATE TABLE `tblparcela` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id_usuario` int(11) NOT NULL,
+  `id_pedido` int(10) unsigned NOT NULL,
+  `id_forma_pag` int(5) DEFAULT '0',
+  `valor_parcela` float DEFAULT NULL,
+  `vencimento` date DEFAULT NULL,
+  `valor_pag` float DEFAULT NULL,
+  `data_pgto` date DEFAULT NULL,
+  `valor_rec` float DEFAULT NULL,
+  `multa` float DEFAULT NULL,
+  `juros` float DEFAULT NULL,
+  `flgstatus` smallint(1) NOT NULL DEFAULT '1' COMMENT '1: Pendente; 2: Pago',
+  `recibo` varchar(100) DEFAULT NULL,
+  `nosso_numero` int(8) DEFAULT '0',
+  `stEstorno` smallint(1) DEFAULT '0' COMMENT '0: Não Estornado; 1: Estornado ',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `nosso_numero` (`nosso_numero`),
+  KEY `tblparcela_FKIndex1` (`id_pedido`)
+) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tblparcela`
+--
+
+/*!40000 ALTER TABLE `tblparcela` DISABLE KEYS */;
+INSERT INTO `tblparcela` (`id`,`id_usuario`,`id_pedido`,`id_forma_pag`,`valor_parcela`,`vencimento`,`valor_pag`,`data_pgto`,`valor_rec`,`multa`,`juros`,`flgstatus`,`recibo`,`nosso_numero`,`stEstorno`) VALUES 
+ (1,1,2,4,450,'2015-10-04',450,'2015-09-04',450,0,0,2,'001',1,0),
+ (2,1,2,2,450,'2015-11-04',0,'0000-00-00',0,0,0,1,NULL,2,0),
+ (3,1,2,2,450,'2015-12-04',0,'0000-00-00',0,0,0,1,NULL,3,0),
+ (4,1,2,2,450,'2016-01-04',0,'0000-00-00',0,0,0,1,NULL,4,0),
+ (5,1,3,4,122.5,'2015-10-10',122.5,'2015-09-12',122.5,0,0,2,'01',5,0),
+ (6,1,3,6,122.5,'2015-11-10',0,'0000-00-00',0,0,0,1,NULL,6,0),
+ (7,1,4,4,356.2,'2015-10-21',356.2,'2015-09-22',356.2,0,0,2,'01',7,0),
+ (8,1,4,6,356.2,'2015-11-21',0,'0000-00-00',0,0,0,1,NULL,8,0),
+ (9,1,4,6,356.2,'2015-12-21',0,'0000-00-00',0,0,0,1,NULL,9,0),
+ (10,1,5,1,268.27,'2015-11-12',0,'0000-00-00',0,0,0,1,NULL,10,0),
+ (11,1,5,1,268.27,'2015-12-12',0,'0000-00-00',0,0,0,1,NULL,11,0),
+ (12,1,5,1,268.26,'2016-01-12',0,'0000-00-00',0,0,0,1,NULL,12,0),
+ (13,1,6,1,153.93,'2015-11-24',0,'0000-00-00',0,0,0,1,NULL,13,0),
+ (14,1,6,1,153.93,'2015-12-24',0,'0000-00-00',0,0,0,1,NULL,14,0),
+ (15,1,6,1,153.94,'2016-01-24',0,'0000-00-00',0,0,0,1,NULL,15,0),
+ (16,1,1,1,258.33,'2015-12-14',0,'0000-00-00',0,0,0,1,NULL,16,0),
+ (17,1,1,1,258.33,'2016-01-14',0,'0000-00-00',0,0,0,1,NULL,17,0),
+ (18,1,1,1,258.34,'2016-02-14',0,'0000-00-00',0,0,0,1,NULL,18,0);
+/*!40000 ALTER TABLE `tblparcela` ENABLE KEYS */;
+
+
+--
+-- Definition of table `tblpedido`
+--
+
+DROP TABLE IF EXISTS `tblpedido`;
+CREATE TABLE `tblpedido` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id_cliente` int(10) unsigned NOT NULL,
+  `numero_pedido` int(10) unsigned NOT NULL DEFAULT '0',
+  `data_pedido` date DEFAULT NULL,
+  `primeiro_venc` date DEFAULT NULL,
+  `num_parc` int(5) DEFAULT '0',
+  `id_formapag` int(5) DEFAULT '0',
+  `valor_custo` float DEFAULT '0',
+  `valor_venda` float DEFAULT '0',
+  `valor` float DEFAULT NULL,
+  `status_pedido` smallint(1) unsigned NOT NULL COMMENT '1: Em aberto; 2: Concluido; 3: Cancelado',
+  `observacao` text,
+  PRIMARY KEY (`id`),
+  KEY `tblpedido_FKIndex1` (`id_cliente`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tblpedido`
+--
+
+/*!40000 ALTER TABLE `tblpedido` DISABLE KEYS */;
+INSERT INTO `tblpedido` (`id`,`id_cliente`,`numero_pedido`,`data_pedido`,`primeiro_venc`,`num_parc`,`id_formapag`,`valor_custo`,`valor_venda`,`valor`,`status_pedido`,`observacao`) VALUES 
+ (1,1,1,'2015-11-13',NULL,0,0,700,925,925,2,''),
+ (2,2,2,'2015-09-04',NULL,0,0,1200,1800,1800,2,''),
+ (3,2,3,'2015-09-12',NULL,0,0,185,245,245,2,''),
+ (4,2,4,'2015-09-22',NULL,0,0,670,1068.6,1068.6,2,''),
+ (5,2,5,'2015-10-10',NULL,0,0,730,904.8,904.8,2,''),
+ (6,2,6,'2015-10-24',NULL,0,0,361,461.8,461.8,2,'');
+/*!40000 ALTER TABLE `tblpedido` ENABLE KEYS */;
+
+
+--
+-- Definition of table `tblproduto`
+--
+
+DROP TABLE IF EXISTS `tblproduto`;
+CREATE TABLE `tblproduto` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id_categoria` int(11) NOT NULL,
+  `id_marca` int(10) unsigned NOT NULL,
+  `id_fornecedor` int(11) NOT NULL,
+  `nome` varchar(150) NOT NULL,
+  `valor_compra` float NOT NULL,
+  `valor` float DEFAULT NULL,
+  `codigo` varchar(100) DEFAULT NULL,
+  `data_cadastro` date DEFAULT NULL,
+  `local_estoque` varchar(150) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `tblproduto_FKIndex1` (`id_marca`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tblproduto`
+--
+
+/*!40000 ALTER TABLE `tblproduto` DISABLE KEYS */;
+INSERT INTO `tblproduto` (`id`,`id_categoria`,`id_marca`,`id_fornecedor`,`nome`,`valor_compra`,`valor`,`codigo`,`data_cadastro`,`local_estoque`) VALUES 
+ (1,1,1,1,'Calça Jeans',45,60,'C345','2015-09-01','2015/09/01'),
+ (2,1,1,1,'Bermuda Jeans',50,65,'B789','2015-09-01','02'),
+ (3,1,1,1,'Perfume',68,88.4,'P-45','2015-10-10','06');
+/*!40000 ALTER TABLE `tblproduto` ENABLE KEYS */;
+
+
+--
+-- Definition of table `usuarios`
+--
+
+DROP TABLE IF EXISTS `usuarios`;
+CREATE TABLE `usuarios` (
+  `id_usuario` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `login` varchar(255) NOT NULL DEFAULT '',
+  `senha` varchar(50) NOT NULL DEFAULT '',
+  `email` varchar(100) NOT NULL,
+  `nome` varchar(150) NOT NULL,
+  `telefone` varchar(25) NOT NULL,
+  `foto` varchar(60) DEFAULT NULL,
+  `ativo` smallint(1) DEFAULT '0',
+  `tipo_usuario` smallint(1) DEFAULT '0',
+  PRIMARY KEY (`id_usuario`)
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `usuarios`
+--
+
+/*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
+INSERT INTO `usuarios` (`id_usuario`,`login`,`senha`,`email`,`nome`,`telefone`,`foto`,`ativo`,`tipo_usuario`) VALUES 
+ (1,'etevaldo','6e25da606bab2c8e5908ef6b69b3c458','etevasldojales@gmail.com','Etevaldo Jales','(85) 3294-2735',NULL,1,1),
+ (6,'teste','698dc19d489c4e4db73e28a713eab07b','teste@gmail.com','Teste','(85) 9999-9999','',1,1);
+/*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
+
+
+--
+-- Definition of table `usuarios_secoes`
+--
+
+DROP TABLE IF EXISTS `usuarios_secoes`;
+CREATE TABLE `usuarios_secoes` (
+  `id_usuario_secoes` int(11) NOT NULL AUTO_INCREMENT,
+  `id_usuario` int(11) NOT NULL DEFAULT '0',
+  `id_secoes` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id_usuario_secoes`)
+) ENGINE=MyISAM AUTO_INCREMENT=89 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `usuarios_secoes`
+--
+
+/*!40000 ALTER TABLE `usuarios_secoes` DISABLE KEYS */;
+INSERT INTO `usuarios_secoes` (`id_usuario_secoes`,`id_usuario`,`id_secoes`) VALUES 
+ (2,1,7),
+ (3,1,7),
+ (4,1,2),
+ (5,1,4),
+ (6,1,3),
+ (7,1,3),
+ (8,1,8),
+ (9,1,8),
+ (10,1,8),
+ (11,1,8),
+ (12,1,5),
+ (13,1,5),
+ (14,1,5),
+ (15,1,5),
+ (16,1,1),
+ (17,1,9),
+ (64,5,9),
+ (63,5,1),
+ (62,5,5),
+ (61,5,5),
+ (60,5,5),
+ (59,5,5),
+ (58,5,8),
+ (57,5,8),
+ (56,5,8),
+ (55,5,8),
+ (54,5,3),
+ (53,5,3),
+ (52,5,4),
+ (51,5,2),
+ (50,5,7),
+ (49,5,7),
+ (88,6,8),
+ (87,6,8),
+ (86,6,8),
+ (85,6,3),
+ (84,6,3),
+ (83,6,4),
+ (82,6,2),
+ (81,6,7),
+ (80,6,7);
+/*!40000 ALTER TABLE `usuarios_secoes` ENABLE KEYS */;
+
+
+--
+-- Definition of table `usuarios_subsecoes`
+--
+
+DROP TABLE IF EXISTS `usuarios_subsecoes`;
+CREATE TABLE `usuarios_subsecoes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_usuario` int(8) NOT NULL,
+  `id_secao` int(5) NOT NULL,
+  `id_subsecao` int(5) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=88 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `usuarios_subsecoes`
+--
+
+/*!40000 ALTER TABLE `usuarios_subsecoes` DISABLE KEYS */;
+INSERT INTO `usuarios_subsecoes` (`id`,`id_usuario`,`id_secao`,`id_subsecao`) VALUES 
+ (1,1,7,6),
+ (2,1,7,7),
+ (3,1,2,0),
+ (4,1,4,0),
+ (5,1,3,1),
+ (6,1,3,2),
+ (7,1,8,3),
+ (8,1,8,4),
+ (9,1,8,5),
+ (10,1,8,12),
+ (11,1,5,8),
+ (12,1,5,9),
+ (13,1,5,10),
+ (14,1,5,11),
+ (15,1,1,0),
+ (16,1,9,0),
+ (63,5,9,0),
+ (62,5,1,0),
+ (61,5,5,11),
+ (60,5,5,10),
+ (59,5,5,9),
+ (58,5,5,8),
+ (57,5,8,12),
+ (56,5,8,5),
+ (55,5,8,4),
+ (54,5,8,3),
+ (53,5,3,2),
+ (52,5,3,1),
+ (51,5,4,0),
+ (50,5,2,0),
+ (49,5,7,7),
+ (48,5,7,6),
+ (87,6,8,5),
+ (86,6,8,4),
+ (85,6,8,3),
+ (84,6,3,2),
+ (83,6,3,1),
+ (82,6,4,0),
+ (81,6,2,0),
+ (80,6,7,7),
+ (79,6,7,6);
+/*!40000 ALTER TABLE `usuarios_subsecoes` ENABLE KEYS */;
+
+
+
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

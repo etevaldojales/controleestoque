@@ -1,0 +1,12 @@
+<IfModule mod_php.c>
+    php_value session.name "CONTROLEESTOQUE_SESS"
+    php_value session.cookie_path "/controleestoque/"
+</IfModule>
+<IfModule mod_php7.c>
+    php_value session.name "CONTROLEESTOQUE_SESS"
+    php_value session.cookie_path "/controleestoque/"
+</IfModule>
+<IfModule mod_php8.c>
+    php_value session.name "CONTROLEESTOQUE_SESS"
+    php_value session.cookie_path "/controleestoque/"
+</IfModule>
