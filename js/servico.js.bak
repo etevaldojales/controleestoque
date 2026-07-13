@@ -81,14 +81,14 @@ function adicionarItemRe()
 			resposta = xhReq.responseXML;
 			obj = resposta.getElementsByTagName('retorno');
 
-			// verifica o campo mensagem do XML, se for 1 é que inseriu OK, caso contrário, é erro.
+			// verifica o campo mensagem do XML, se for 1 Ã© que inseriu OK, caso contrÃ¡rio, Ã© erro.
 			if (obj[0].getElementsByTagName("mensagem")[0].firstChild.nodeValue == 1)
 			{
 				alert('Item incluido com sucesso!');
 				carregarItens();
 			}
 			else if(obj[0].getElementsByTagName("mensagem")[0].firstChild.nodeValue == 2) {
-				alert('Item já cadastrado nesse pedido');
+				alert('Item jÃ¡ cadastrado nesse pedido');
 			}
 			else {
 				alert('Falha ao cadastrar item');	
@@ -118,7 +118,7 @@ function addServicoRe()
 			resposta = xhReq.responseXML;
 			obj = resposta.getElementsByTagName('retorno');
 
-			// verifica o campo mensagem do XML, se for 1 é que inseriu OK, caso contrário, é erro.
+			// verifica o campo mensagem do XML, se for 1 Ã© que inseriu OK, caso contrÃ¡rio, Ã© erro.
 			if (obj[0].getElementsByTagName("mensagem")[0].firstChild.nodeValue == 1)
 			{
 				carregarItens();
@@ -135,10 +135,10 @@ function capturarQtd(event, iditem, qtd) {
 	var keynum;  
 	if(window.event) { //IE  
 		keynum = event.keyCode  
-	} else if(event.which) { // Netscape/Firefox/Opera AQUI ESTAVA O PEQUENINO ERRO ao invés de "e." é "event."  
+	} else if(event.which) { // Netscape/Firefox/Opera AQUI ESTAVA O PEQUENINO ERRO ao invÃ©s de "e." Ã© "event."  
 		keynum = event.which  
 	}  
-	if( keynum==13 ) { <!-- 13 é o código do Enter --> AQUI TAMBEM  
+	if( keynum==13 ) { <!-- 13 Ã© o cÃ³digo do Enter --> AQUI TAMBEM  
 		alterarQuantidadeItem(iditem, qtd);  
 	}  
 } 
@@ -156,7 +156,7 @@ function alterarQuantidadeItemRe()
 			resposta = xhReq.responseXML;
 			obj = resposta.getElementsByTagName('retorno');
 
-			// verifica o campo mensagem do XML, se for 1 é que inseriu OK, caso contrário, é erro.
+			// verifica o campo mensagem do XML, se for 1 Ã© que inseriu OK, caso contrÃ¡rio, Ã© erro.
 			if (obj[0].getElementsByTagName("mensagem")[0].firstChild.nodeValue == 1)
 			{
 				carregarItens();
@@ -172,10 +172,10 @@ function capturarIpi(event, iditem, ipi) {
 	var keynum;  
 	if(window.event) { //IE  
 		keynum = event.keyCode  
-	} else if(event.which) { // Netscape/Firefox/Opera AQUI ESTAVA O PEQUENINO ERRO ao invés de "e." é "event."  
+	} else if(event.which) { // Netscape/Firefox/Opera AQUI ESTAVA O PEQUENINO ERRO ao invÃ©s de "e." Ã© "event."  
 		keynum = event.which  
 	}  
-	if( keynum==13 ) { <!-- 13 é o código do Enter --> AQUI TAMBEM  
+	if( keynum==13 ) { <!-- 13 Ã© o cÃ³digo do Enter --> AQUI TAMBEM  
 		alterarIpiItem(iditem, ipi);  
 	}  
 } 
@@ -193,7 +193,7 @@ function alterarIpiItemRe()
 			resposta = xhReq.responseXML;
 			obj = resposta.getElementsByTagName('retorno');
 
-			// verifica o campo mensagem do XML, se for 1 é que inseriu OK, caso contrário, é erro.
+			// verifica o campo mensagem do XML, se for 1 Ã© que inseriu OK, caso contrÃ¡rio, Ã© erro.
 			if (obj[0].getElementsByTagName("mensagem")[0].firstChild.nodeValue == 1)
 			{
 				carregarItens();
@@ -220,10 +220,10 @@ function concluirPedidoRe()
 			resposta = xhReq.responseXML;
 			obj = resposta.getElementsByTagName('retorno');
 
-			// verifica o campo mensagem do XML, se for 1 é que inseriu OK, caso contrário, é erro.
+			// verifica o campo mensagem do XML, se for 1 Ã© que inseriu OK, caso contrÃ¡rio, Ã© erro.
 			if (obj[0].getElementsByTagName("mensagem")[0].firstChild.nodeValue == 1)
 			{
-				alert('Pedido concluído com sucesso!');
+				alert('Pedido concluÃ­do com sucesso!');
 				//location.href = 'vendas.php';
 				location.href = 'formapagamento.php';
 			}
@@ -260,7 +260,7 @@ function validarRe()
 	if (xhReq.readyState == 4)
 	{
 		retorno = xhReq.responseXML;
-		// se o retorno for um XML, então começa a agir.
+		// se o retorno for um XML, entÃ£o comeÃ§a a agir.
 		if (retorno != null)
 		{
 			obj = retorno.getElementsByTagName('retorno');
@@ -343,7 +343,7 @@ function imprimirBoletoRe()
 	if (xhReq.readyState == 4)
 	{
 		retorno = xhReq.responseXML;
-		// se o retorno for um XML, então começa a agir.
+		// se o retorno for um XML, entÃ£o comeÃ§a a agir.
 		if (retorno != null)
 		{
 			obj = retorno.getElementsByTagName('retorno');
@@ -374,7 +374,7 @@ function baixarParcelaRe()
 	if (xhReq.readyState == 4)
 	{
 		retorno = xhReq.responseXML;
-		// se o retorno for um XML, então começa a agir.
+		// se o retorno for um XML, entÃ£o comeÃ§a a agir.
 		if (retorno != null)
 		{
 			obj = retorno.getElementsByTagName('retorno');
@@ -423,7 +423,7 @@ function baixarEntradaRe()
 	if (xhReq.readyState == 4)
 	{
 		retorno = xhReq.responseXML;
-		// se o retorno for um XML, então começa a agir.
+		// se o retorno for um XML, entÃ£o comeÃ§a a agir.
 		if (retorno != null)
 		{
 			obj = retorno.getElementsByTagName('retorno');
@@ -454,7 +454,7 @@ function excluirParcelaRe()
 	if (xhReq.readyState == 4)
 	{
 		retorno = xhReq.responseXML;
-		// se o retorno for um XML, então começa a agir.
+		// se o retorno for um XML, entÃ£o comeÃ§a a agir.
 		if (retorno != null)
 		{
 			obj = retorno.getElementsByTagName('retorno');
@@ -516,7 +516,7 @@ function validarEstornoRe()
 }
 
 function finalizarPedido() {
-	alert('Pedido concluído com sucesso!')
+	alert('Pedido concluÃ­do com sucesso!')
 	location.href = 'vendas.php';
 }
 
@@ -541,7 +541,7 @@ function alterarValorVendaRe()
 				carregarItens();
 			}
 			else if(obj[0].getElementsByTagName("mensagem")[0].firstChild.nodeValue == 2) {
-				alert('O valor de venda não pode ser menor ou igual ao valor de compra');
+				alert('O valor de venda nÃ£o pode ser menor ou igual ao valor de compra');
 				if(document.getElementById('btnCloseModal')) {
 					document.getElementById('btnCloseModal').click();
 				}
@@ -583,7 +583,7 @@ function calcularRe()
 			obj = resposta.getElementsByTagName('dados');
 			if (obj.length >= 1)
 			{
-				/* Variáveis do Formulário */
+				/* VariÃ¡veis do FormulÃ¡rio */
 				var nvalor;
 				var Xvalor	= obj[0].getElementsByTagName('valor')[0].firstChild;
 				nvalor 		= (Xvalor != null?unescape(Xvalor.nodeValue):'');

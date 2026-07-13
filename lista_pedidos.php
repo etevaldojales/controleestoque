@@ -34,26 +34,29 @@ Período: de <?=$_POST['datai']?> à <?=$_POST['dataf']?>
     <tr>
 		<td>DATA</td>
 		<td class="hidden-phone">FORMA PGTO</td>
-        <td class="hidden-phone">CUSTO</td>
-        <td class="hidden-phone">LUCRO</td>
+        <td class="hidden-phone">PRODUTOS VENDIDOS</td>
 		<td class="hidden-phone">VENDA</td>
     </tr>
     <?php
     if(is_array($dados)) {
-		$totallucro = 0;
-		$totalcusto = 0;
 		$totalvenda = 0;
 		foreach($dados as $d) {
-			$lucro = $d['valor_venda'] - $d['valor_custo'];  	
-			$totalcusto += $d['valor_custo'];
-			$totallucro += $lucro;
 			$totalvenda += $d['valor_venda'];
+			
+			// Obter itens do pedido
+			$itens = $_class->getItensPedido($d['id']);
+			$arrItens = array();
+			if(is_array($itens)) {
+				foreach($itens as $item) {
+					$arrItens[] = $item['produto'] . " (" . $item['quantidade'] . ")";
+				}
+			}
+			$produtosDesc = implode(", ", $arrItens);
 		?>
 		<tr class="odd gradeX">
 			<td><?=$_util->dataMySql2Php($d['data_pedido'])?></td>
 			<td class="hidden-phone"><?=$d['forma_pgto']?></td>
-			<td class="hidden-phone">R$ <?=number_format($d['valor_custo'],2,",",".")?></td>
-			<td class="hidden-phone">R$ <?=number_format($lucro,2,",",".")?></td>
+			<td class="hidden-phone"><?=$produtosDesc?></td>
 			<td class="hidden-phone">R$ <?=number_format($d['valor_venda'],2,",",".")?></td>
 		</tr>
 		<?php
@@ -62,7 +65,7 @@ Período: de <?=$_POST['datai']?> à <?=$_POST['dataf']?>
 	else {
 	?>
 	<tr class="odd gradeX">
-		<td class="hidden-phone" colspan="3">NÃO HÁ PEDIDO CADASTRADO</td>
+		<td class="hidden-phone" colspan="4">NÃO HÁ PEDIDO CADASTRADO</td>
 	</tr>
 	<?php
 	}
@@ -77,15 +80,8 @@ if(is_array($dados)) {
         <th>Período: de <?=$_POST['datai']?> à <?=$_POST['dataf']?></th>
     </tr>
     <tr>
-        <td><strong>Custo:</strong> R$ <?=number_format($totalcusto,2,",",".")?></td>
-    </tr>
-    <tr>
-        <td><strong>Lucro:</strong> R$ <?=number_format($totallucro,2,",",".")?></td>
-    </tr>
-    <tr>
         <td><strong>Venda:</strong> R$ <?=number_format($totalvenda,2,",",".")?></td>
     </tr>
-
 </table>
 <?php
 }

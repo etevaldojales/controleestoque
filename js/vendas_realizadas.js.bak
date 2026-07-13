@@ -55,7 +55,7 @@ function imprimirBoletoRe()
 	if (xhReq.readyState == 4)
 	{
 		retorno = xhReq.responseXML;
-		// se o retorno for um XML, então começa a agir.
+		// se o retorno for um XML, entÃ£o comeÃ§a a agir.
 		if (retorno != null)
 		{
 			obj = retorno.getElementsByTagName('retorno');
@@ -86,7 +86,7 @@ function baixarParcelaRe()
 	if (xhReq.readyState == 4)
 	{
 		retorno = xhReq.responseXML;
-		// se o retorno for um XML, então começa a agir.
+		// se o retorno for um XML, entÃ£o comeÃ§a a agir.
 		if (retorno != null)
 		{
 			obj = retorno.getElementsByTagName('retorno');
@@ -135,7 +135,7 @@ function baixarEntradaRe()
 	if (xhReq.readyState == 4)
 	{
 		retorno = xhReq.responseXML;
-		// se o retorno for um XML, então começa a agir.
+		// se o retorno for um XML, entÃ£o comeÃ§a a agir.
 		if (retorno != null)
 		{
 			obj = retorno.getElementsByTagName('retorno');

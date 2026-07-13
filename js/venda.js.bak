@@ -148,7 +148,7 @@ function excluirItemPdv(id) {
       data: { id: id },
       dataType: "json",
       success: function (response) {
-        //alert("Item excluído com sucesso!");
+        //alert("Item excluÃ­do com sucesso!");
         //window.reload();
         carregarItensPdv();
       },
@@ -188,7 +188,7 @@ function adicionarItemPdvRe() {
       resposta = xhReq.responseXML;
       obj = resposta.getElementsByTagName("retorno");
 
-      // verifica o campo mensagem do XML, se for 1 � que inseriu OK, caso contr�rio, � erro.
+      // verifica o campo mensagem do XML, se for 1 ï¿½ que inseriu OK, caso contrï¿½rio, ï¿½ erro.
       if (
         obj[0].getElementsByTagName("mensagem")[0].firstChild.nodeValue == 1
       ) {
@@ -201,7 +201,7 @@ function adicionarItemPdvRe() {
       } else if (
         obj[0].getElementsByTagName("mensagem")[0].firstChild.nodeValue == 2
       ) {
-        alert("Item já cadastrado nesse pedido");
+        alert("Item jÃ¡ cadastrado nesse pedido");
       } else {
         alert("Falha ao cadastrar item");
       }
@@ -295,7 +295,7 @@ function getProdutoRef(ref) {
             return;
           }
 
-          var unidade = r.unidade == 1 ? "Valor unitário:" : "Valor Kg:";
+          var unidade = r.unidade == 1 ? "Valor unitÃ¡rio:" : "Valor Kg:";
 
           $("#desc_produto").text(r.nome.toUpperCase());
           $("#vr_unitario").val(r.valor);
@@ -325,7 +325,7 @@ function getProdutoRef(ref) {
           $("#valor_unitario").val(unidade + " " + r.valor);
           $("#qtd_estoque").val("Estoque: " + r.qtdacumulado);
         } else {
-          alert("Produto não encontrado");
+          alert("Produto nÃ£o encontrado");
           setTimeout(function () {
             showProdutoRapidoModal(ref);
           }, 4400);
@@ -362,7 +362,7 @@ function getProdutoId(id) {
               showEstoqueRapidoModal(r.codigo, r.id);
               return;
             }
-            var unidade = r.unidade == 1 ? "Valor unitário:" : "Valor Kg:";
+            var unidade = r.unidade == 1 ? "Valor unitÃ¡rio:" : "Valor Kg:";
 
             $("#desc_produto").text(r.nome.toUpperCase());
             $("#codigo").val(r.codigo);
@@ -392,7 +392,7 @@ function getProdutoId(id) {
             $("#valor_unitario").val(unidade + " " + r.valor);
             $("#qtd_estoque").val("Estoque: " + r.qtdacumulado);
           } else {
-            alert("Produto não encontrado");
+            alert("Produto nÃ£o encontrado");
           }
         } else {
           alert("Falha ao buscar produto");
@@ -450,7 +450,7 @@ function adicionarItemPdvByRef() {
           limparCampos();
           carregarItensPdv();
         } else if (r == 2) {
-          alert("Item já cadastrado nesse pedido");
+          alert("Item jÃ¡ cadastrado nesse pedido");
         } else {
           alert("Falha ao cadastrar item");
         }
@@ -496,7 +496,7 @@ function adicionarItemRe() {
       resposta = xhReq.responseXML;
       obj = resposta.getElementsByTagName("retorno");
 
-      // verifica o campo mensagem do XML, se for 1 � que inseriu OK, caso contr�rio, � erro.
+      // verifica o campo mensagem do XML, se for 1 ï¿½ que inseriu OK, caso contrï¿½rio, ï¿½ erro.
       if (
         obj[0].getElementsByTagName("mensagem")[0].firstChild.nodeValue == 1
       ) {
@@ -505,7 +505,7 @@ function adicionarItemRe() {
       } else if (
         obj[0].getElementsByTagName("mensagem")[0].firstChild.nodeValue == 2
       ) {
-        alert("Item já cadastrado nesse pedido");
+        alert("Item jÃ¡ cadastrado nesse pedido");
       } else {
         alert("Falha ao cadastrar item");
       }
@@ -519,11 +519,11 @@ function capturarQtd(event, iditem, qtd) {
     //IE
     keynum = event.keyCode;
   } else if (event.which) {
-    // Netscape/Firefox/Opera AQUI ESTAVA O PEQUENINO ERRO ao inves de "e." é "event."
+    // Netscape/Firefox/Opera AQUI ESTAVA O PEQUENINO ERRO ao inves de "e." Ã© "event."
     keynum = event.which;
   }
   if (keynum == 13) {
-    // 13 é o codigo do Enter --> AQUI TAMBEM
+    // 13 Ã© o codigo do Enter --> AQUI TAMBEM
     alterarQuantidadeItem(iditem, qtd);
   }
 }
@@ -534,11 +534,11 @@ function capturarQtdPdv(event, iditem, qtd, und) {
     //IE
     keynum = event.keyCode;
   } else if (event.which) {
-    // Netscape/Firefox/Opera AQUI ESTAVA O PEQUENINO ERRO ao inves de "e." é "event."
+    // Netscape/Firefox/Opera AQUI ESTAVA O PEQUENINO ERRO ao inves de "e." Ã© "event."
     keynum = event.which;
   }
   if (keynum == 13) {
-    // 13 é o codigo do Enter --> AQUI TAMBEM
+    // 13 Ã© o codigo do Enter --> AQUI TAMBEM
     alterarQuantidadeItemPdv(iditem, qtd, und);
   }
 }
@@ -558,7 +558,7 @@ function alterarQuantidadeItemPdvRe() {
       resposta = xhReq.responseXML;
       obj = resposta.getElementsByTagName("retorno");
 
-      // verifica o campo mensagem do XML, se for 1 � que inseriu OK, caso contr�rio, � erro.
+      // verifica o campo mensagem do XML, se for 1 ï¿½ que inseriu OK, caso contrï¿½rio, ï¿½ erro.
       if (
         obj[0].getElementsByTagName("mensagem")[0].firstChild.nodeValue == 1
       ) {
@@ -585,7 +585,7 @@ function alterarQuantidadeItemRe() {
       resposta = xhReq.responseXML;
       obj = resposta.getElementsByTagName("retorno");
 
-      // verifica o campo mensagem do XML, se for 1 � que inseriu OK, caso contr�rio, � erro.
+      // verifica o campo mensagem do XML, se for 1 ï¿½ que inseriu OK, caso contrï¿½rio, ï¿½ erro.
       if (
         obj[0].getElementsByTagName("mensagem")[0].firstChild.nodeValue == 1
       ) {
@@ -603,11 +603,11 @@ function capturarIpi(event, iditem, ipi) {
     //IE
     keynum = event.keyCode;
   } else if (event.which) {
-    // Netscape/Firefox/Opera AQUI ESTAVA O PEQUENINO ERRO ao inv�s de "e." � "event."
+    // Netscape/Firefox/Opera AQUI ESTAVA O PEQUENINO ERRO ao invï¿½s de "e." ï¿½ "event."
     keynum = event.which;
   }
   if (keynum == 13) {
-    // 13 � o c�digo do Enter --> AQUI TAMBEM
+    // 13 ï¿½ o cï¿½digo do Enter --> AQUI TAMBEM
     alterarIpiItem(iditem, ipi);
   }
 }
@@ -626,7 +626,7 @@ function alterarIpiItemRe() {
       resposta = xhReq.responseXML;
       obj = resposta.getElementsByTagName("retorno");
 
-      // verifica o campo mensagem do XML, se for 1 � que inseriu OK, caso contr�rio, � erro.
+      // verifica o campo mensagem do XML, se for 1 ï¿½ que inseriu OK, caso contrï¿½rio, ï¿½ erro.
       if (
         obj[0].getElementsByTagName("mensagem")[0].firstChild.nodeValue == 1
       ) {
@@ -666,11 +666,11 @@ function concluirPedidoRe() {
       console.log(xhReq.responseText);
       obj = resposta.getElementsByTagName("retorno");
 
-      // verifica o campo mensagem do XML, se for 1 � que inseriu OK, caso contr�rio, � erro.
+      // verifica o campo mensagem do XML, se for 1 ï¿½ que inseriu OK, caso contrï¿½rio, ï¿½ erro.
       if (
         obj[0].getElementsByTagName("mensagem")[0].firstChild.nodeValue == 1
       ) {
-        alert("Pedido concluído com sucesso!");
+        alert("Pedido concluÃ­do com sucesso!");
         //location.href = 'vendas.php';
         location.href = "formapagamento.php";
       } else {
@@ -712,7 +712,7 @@ function concluirPedidoPdv(id, valor, valorc, valorv) {
     success: function (response) {
       console.log(response);
       if (response == 1) {
-        alert("Pedido concluído com sucesso!");
+        alert("Pedido concluÃ­do com sucesso!");
         document.getElementById("frmimpressao").src = "impressao.php";
         // Call NFe generation and sending after order conclusion
         //gerarEnviarNfe(id);
@@ -742,7 +742,7 @@ function gerarEnviarNfe(orderId) {
       }
     },
     error: function (xhr, status, error) {
-      alert("Erro na requisição NFe: " + error);
+      alert("Erro na requisiÃ§Ã£o NFe: " + error);
     },
   });
 }
@@ -769,7 +769,7 @@ function validar() {
 function validarRe() {
   if (xhReq.readyState == 4) {
     retorno = xhReq.responseXML;
-    // se o retorno for um XML, ent�o come�a a agir.
+    // se o retorno for um XML, entï¿½o comeï¿½a a agir.
     if (retorno != null) {
       obj = retorno.getElementsByTagName("retorno");
       if (
@@ -860,7 +860,7 @@ function imprimirBoleto(id, numparc) {
 function imprimirBoletoRe() {
   if (xhReq.readyState == 4) {
     retorno = xhReq.responseXML;
-    // se o retorno for um XML, ent�o come�a a agir.
+    // se o retorno for um XML, entï¿½o comeï¿½a a agir.
     if (retorno != null) {
       obj = retorno.getElementsByTagName("retorno");
       if (
@@ -904,7 +904,7 @@ function baixarParcela(id, valrec, recibo, forma, numparc) {
 function baixarParcelaRe() {
   if (xhReq.readyState == 4) {
     retorno = xhReq.responseXML;
-    // se o retorno for um XML, ent�o come�a a agir.
+    // se o retorno for um XML, entï¿½o comeï¿½a a agir.
     if (retorno != null) {
       obj = retorno.getElementsByTagName("retorno");
       if (
@@ -962,7 +962,7 @@ function baixarEntrada(id, valrec, recibo, forma) {
 function baixarEntradaRe() {
   if (xhReq.readyState == 4) {
     retorno = xhReq.responseXML;
-    // se o retorno for um XML, ent�o come�a a agir.
+    // se o retorno for um XML, entï¿½o comeï¿½a a agir.
     if (retorno != null) {
       obj = retorno.getElementsByTagName("retorno");
       if (
@@ -991,7 +991,7 @@ function excluirParcela(id) {
 function excluirParcelaRe() {
   if (xhReq.readyState == 4) {
     retorno = xhReq.responseXML;
-    // se o retorno for um XML, ent�o come�a a agir.
+    // se o retorno for um XML, entï¿½o comeï¿½a a agir.
     if (retorno != null) {
       obj = retorno.getElementsByTagName("retorno");
       if (
@@ -1088,7 +1088,7 @@ function alterarValorVendaPdv() {
         obj[0].getElementsByTagName("mensagem")[0].firstChild.nodeValue == 2
       ) {
         alert(
-          "O valor de venda n�o pode ser menor ou igual ao valor de compra"
+          "O valor de venda nï¿½o pode ser menor ou igual ao valor de compra"
         );
         if (document.getElementById("btnCloseModal")) {
           document.getElementById("btnCloseModal").click();
@@ -1133,7 +1133,7 @@ function alterarValorVendaRe() {
         obj[0].getElementsByTagName("mensagem")[0].firstChild.nodeValue == 2
       ) {
         alert(
-          "O valor de venda n�o pode ser menor ou igual ao valor de compra"
+          "O valor de venda nï¿½o pode ser menor ou igual ao valor de compra"
         );
         if (document.getElementById("btnCloseModal")) {
           document.getElementById("btnCloseModal").click();
@@ -1175,7 +1175,7 @@ function calcularRe() {
     if (resposta) {
       obj = resposta.getElementsByTagName("dados");
       if (obj.length >= 1) {
-        /* Vari�veis do Formul�rio */
+        /* Variï¿½veis do Formulï¿½rio */
         var nvalor;
         var Xvalor = obj[0].getElementsByTagName("valor")[0].firstChild;
         nvalor = Xvalor != null ? unescape(Xvalor.nodeValue) : "";
@@ -1235,7 +1235,7 @@ function calculadora() {
   var cont = "";
   cont += "<div class='modal-header'>";
   cont +=
-    "    <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>�?</button>";
+    "    <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>Ã—</button>";
   cont += "    <h3 id='myModalLabel1'>Calculadora</h3>";
   cont += "    </div>";
   cont += "    <div class='modal-body'>";
@@ -1300,7 +1300,7 @@ function cadastrarProdutoRapido() {
   var fornecedor = $("#modal_fornecedor").val();
 
   if (!nome || !valor_compra || !valor || !marca || !categoria || !codigo || !fornecedor) {
-    alert("Por favor, preencha todos os campos obrigatórios.");
+    alert("Por favor, preencha todos os campos obrigatÃ³rios.");
     return false;
   }
 
@@ -1318,13 +1318,13 @@ function cadastrarProdutoRapido() {
         $("#myModal1").modal("hide");
         getProdutoRef(codigo);
       } else if (response === 2 || response == "2") {
-        alert("Produto já cadastrado!");
+        alert("Produto jÃ¡ cadastrado!");
       } else {
         alert("Erro ao cadastrar produto.");
       }
     },
     error: function (xhr, status, error) {
-      alert("Erro na requisição. Verifique o console.");
+      alert("Erro na requisiÃ§Ã£o. Verifique o console.");
       console.log(error);
     }
   });
@@ -1338,7 +1338,7 @@ function cadastrarEstoqueRapido() {
   var qtdacumulada = $("#modal_estq_acumulada").val();
 
   if (!qtdentrada || !estoquemin) {
-    alert("Por favor, insira a quantidade de entrada e o estoque mínimo.");
+    alert("Por favor, insira a quantidade de entrada e o estoque mÃ­nimo.");
     return false;
   }
 
@@ -1369,7 +1369,7 @@ function cadastrarEstoqueRapido() {
       }
     },
     error: function (xhr, status, error) {
-      alert("Erro na requisição. Verifique o console.");
+      alert("Erro na requisiÃ§Ã£o. Verifique o console.");
       console.log(error);
     }
   });
