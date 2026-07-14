@@ -47,6 +47,14 @@ function pesquisarBaixas() {
 	include('lista_baixas.php','datai='+datai+'&dataf='+dataf,'lista_baixas');	
 }
 
+function pesquisarSintetico() {
+	var datai = document.getElementById('dtini').value;
+	var dataf = document.getElementById('dtfim').value;
+	if (!validarDatas(datai, dataf)) return;
+	var fpg = document.getElementById('forma_pg').value;
+	include('lista_sintetico.php','datai='+datai+'&dataf='+dataf+'&formapg='+fpg,'lista_sintetico');	
+}
+
 function imprimirRelatório(divId) {
     document.getElementById('btnImp').style.display = 'none';
     var divContents = document.getElementById(divId).innerHTML;
