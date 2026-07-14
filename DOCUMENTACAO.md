@@ -139,6 +139,24 @@ $mensagem = $_SESSION["nome_usuario"] . " - EXCLUIU O PRODUTO " . $dados['nome']
 $_logs->salvaLog($mensagem);
 ```
 
+### Fluxo de Relatório Sintético
+1. O administrador acessa a tela de **Relatório Sintético** ([rel_sintetico.php](file:///c:/xampp/htdocs/controleestoque/rel_sintetico.php)).
+2. Seleciona os filtros de período (data inicial/final) e forma de pagamento (Dinheiro, Cartão, Pix, etc. carregados dinamicamente de `tblformapagamento`).
+3. Ao clicar em "Pesquisar", o sistema envia uma requisição AJAX para [lista_sintetico.php](file:///c:/xampp/htdocs/controleestoque/lista_sintetico.php).
+4. O backend agrega as vendas consolidadas (`tblpedido.status_pedido = 2`) em duas tabelas sintéticas:
+    *   **Resumo por Forma de Pagamento:** Calcula a quantidade de vendas, valor total, ticket médio e participação percentual de cada método.
+    *   **Resumo Diário:** Agrupa as vendas de forma cronológica por dia.
+5. Apresenta cards informativos com KPIs gerais (Total Vendido, Qtd. Vendas, Ticket Médio).
+6. Um botão de impressão permite enviar os mesmos parâmetros via formulário POST para [impressao_sintetico.php](file:///c:/xampp/htdocs/controleestoque/impressao_sintetico.php), que renderiza uma visualização limpa e aciona `window.print()`.
+
+### Rotina de Backup Automático
+1. O script CLI [cron_backup.php](file:///c:/xampp/htdocs/controleestoque/cron_backup.php) executa em segundo plano.
+2. Lê as configurações do banco de dados a partir de [config.php](file:///c:/xampp/htdocs/controleestoque/lib/classes/config.php).
+3. Varre as tabelas do banco e exporta as queries de criação de tabelas e inserção de dados em arquivos `.sql` salvos em `/backups/`.
+4. **Política de Retenção:** Identifica e remove arquivos antigos de backup, mantendo apenas os 30 mais recentes no disco.
+5. **Auditoria:** Grava logs da execução (sucesso ou falha) diretamente na tabela `logs`.
+6. O arquivo [setup_task.bat](file:///c:/xampp/htdocs/controleestoque/setup_task.bat) automatiza o registro da tarefa no Agendador de Tarefas do Windows (configurada para execução a cada 12 horas).
+
 ---
 
 ## 📁 5. Estrutura de Diretórios do Projeto
@@ -149,9 +167,14 @@ $_logs->salvaLog($mensagem);
     *   `clientes.php` / `usuario.php` - Telas cadastrais de clientes e usuários.
     *   `produtos_cadastrar.php` - Tela cadastral de produtos.
     *   `empresa.php` - Gerenciamento de dados da empresa e uploads de Logomarca/QR-Code.
+    *   `rel_sintetico.php` / `lista_sintetico.php` / `impressao_sintetico.php` - Filtros, processamento AJAX e impressão do Relatório Sintético de Vendas.
+    *   `cron_backup.php` / `setup_task.bat` - Script CLI de backup do banco de dados e lote de configuração do Agendador de Tarefas do Windows.
     *   `config_inicio.php` - Bootstrap de inicialização que define caminhos e checa login.
     *   `bd.[nome].php` - Endpoints que processam requisições AJAX (CRUD).
+*   `/backups/`
+    *   Armazena os arquivos de backup `.sql` gerados automaticamente pela rotina de segundo plano.
 *   `/js/`
+    *   `relatorios.js` - Controladores das telas de relatórios (inclui a requisição assíncrona do Relatório Sintético).
     *   `produtos.js` / `cliente.js` / `usuario.js` - Controladores Javascript das telas de produtos, clientes e usuários.
     *   `venda.js` - Gerencia o comportamento dinâmico da tela de vendas e cálculo de parcelamentos.
 *   `/lib/`
