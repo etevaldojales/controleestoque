@@ -109,13 +109,14 @@ Tabela de auditoria para todas as operações críticas do sistema.
 1.  **Proteção contra Cross-Site Request Forgery (CSRF):**
     *   Implementado no arquivo [class.utilidades.php](file:///c:/xampp/htdocs/controleestoque/lib/classes/class.utilidades.php), o sistema gera tokens únicos salvos em sessão por meio do método `get_csrf_token()`.
     *   Formulários utilizam `get_csrf_token_html()` para renderizar campos `<input type="hidden">` contendo o token.
-    *   Processos de inserção e exclusão validam o token utilizando `valida_csrf_token()` antes de prosseguir com qualquer query.
-2.  **Parâmetros de Sessão Seguros:**
-    *   Configuração restrita de cookies de sessão (`cookie_lifetime`, `cookie_path` apontando apenas para `/controleestoque/`, `HttpOnly` ativado, `SameSite=Lax` e nomenclatura única `CONTROLEESTOQUE_SESS`) implementada globalmente em [config.php](file:///c:/xampp/htdocs/controleestoque/lib/classes/config.php).
+    *   Processos de inserção e exclusão va2.  **Parâmetros de Sessão Dinâmicos e Seguros:**
+    *   Configuração dinâmica de cookies de sessão (`cookie_lifetime`, `cookie_path` calculado automaticamente com base no caminho físico da pasta do projeto, `HttpOnly` ativado, `SameSite=Lax` e nomenclatura única `SESS_[NOME_DA_PASTA]`) implementada globalmente em [config.php](file:///c:/xampp/htdocs/controleestoque/lib/classes/config.php). Isso previne a invalidade de sessões caso o diretório do projeto seja renomeado.
 3.  **Sanitização de Consultas:**
     *   O backend utiliza queries parametrizadas (Prepared Statements) fornecidas pelo ADODB (`$db->Execute($sql, $params)`), prevenindo brechas de SQL Injection.
 4.  **Autenticação e Permissões:**
     *   O acesso às telas e menus é controlado dinamicamente através do vínculo entre o usuário e as tabelas `usuarios_secoes` e `usuarios_subsecoes`. Se um usuário não possuir acesso a uma seção, ela não será exibida no menu lateral.
+5.  **Redirecionamento Preventivo de Instalação:**
+    *   O arquivo de configuração [config.php](file:///c:/xampp/htdocs/controleestoque/lib/classes/config.php) checa a existência do arquivo de trava de segurança `setup/install.lock`. Caso esteja ausente, o usuário é automaticamente redirecionado ao assistente de instalação (`setup/index.php`), impedindo o acesso à tela de login do sistema sem banco de dados configurado.
 
 ---
 
@@ -186,5 +187,25 @@ $_logs->salvaLog($mensagem);
         *   `class.bancos.php` - Configurações de layouts bancários de boleto.
         *   `class.utilidades.php` - Utilitários de strings, datas, e tratamento de tokens CSRF.
         *   `config.php` - Conexão ao banco de dados e parametrizações de sessão.
+*   `/setup/` (Diretório do Instalador)
+    *   `index.php` - Página principal do instalador e processador de chamadas AJAX da instalação.
+    *   `setup.css` - Estilização moderna e responsiva do assistente passo a passo.
+    *   `setup.js` - Controlador de passos visuais e chamadas de API do setup.
+    *   `structure.sql` - Dump da estrutura de tabelas do banco em formato UTF-8 (limpo).
+    *   `seeds.sql` - Dump dos dados de carga obrigatórios (seções, subseções, formas de pagamento e bancos).
+    *   `install.lock` - Arquivo gerado ao fim da instalação para bloquear o assistente contra novos acessos.
 *   `/uploads/`
     *   Armazena arquivos temporários, logomarcas, QR-Codes da empresa e fotos dos produtos.
+
+---
+
+## 🚀 6. Processo de Instalação do Sistema (Setup)
+
+O sistema possui um assistente visual para automatizar o deploy inicial:
+
+1.  **Redirecionamento**: Na primeira vez que o sistema for acessado (ex: por meio da tela de login), o arquivo [config.php](file:///c:/xampp/htdocs/controleestoque/lib/classes/config.php) detecta a ausência de `setup/install.lock` e redireciona o fluxo para `setup/index.php`.
+2.  **Passo 1 (Conexão)**: O instalador solicita as credenciais do banco de dados (Servidor, Usuário, Senha e Nome do Banco). Ele testa a conexão e, caso o banco de dados não exista no MySQL, ele tenta criá-lo automaticamente com charset UTF-8. Ao obter sucesso, as credenciais são gravadas no arquivo `lib/classes/config.php`.
+3.  **Passo 2 (Tabelas)**: O usuário aciona a criação do banco de dados. O backend executa o arquivo `setup/structure.sql` (que limpa e recria todas as tabelas vazias) e em seguida executa o arquivo `setup/seeds.sql` (populando menus de barra lateral, bancos de boletos e métodos de pagamento como o Pix).
+4.  **Passo 3 (Administrador)**: O instalador solicita o **Nome do Projeto / Empresa** (para preencher no cabeçalho do sistema) e as credenciais do administrador inicial (Nome completo, Usuário, Email e Senha). O backend cadastra o usuário com senha criptografada em MD5, associa todas as permissões do sistema a ele, persiste o nome da empresa e escreve a trava de segurança `setup/install.lock`.
+5.  **Conclusão**: O usuário é redirecionado de volta para a tela de login do sistema pronto para uso, e novas tentativas de acessar `/setup/` mostrarão uma tela de instalação bloqueada.
+
