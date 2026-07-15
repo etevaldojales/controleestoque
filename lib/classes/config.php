@@ -32,7 +32,22 @@ if (session_status() === PHP_SESSION_NONE) {
 	session_name($sessionName);
 	session_start();
 }
-
+$lockFile = dirname(__DIR__, 2) . '/setup/install.lock';
+if (!file_exists($lockFile) && strpos($_SERVER['SCRIPT_NAME'], '/setup/') === false) {
+	$rootPath = realpath(dirname(__DIR__, 2));
+	$scriptPath = realpath(dirname($_SERVER['SCRIPT_FILENAME']));
+	$relPath = '';
+	if ($rootPath && $scriptPath && strpos($scriptPath, $rootPath) === 0) {
+		$subPath = substr($scriptPath, strlen($rootPath));
+		$subPath = trim($subPath, DIRECTORY_SEPARATOR);
+		if (!empty($subPath)) {
+			$parts = explode(DIRECTORY_SEPARATOR, $subPath);
+			$relPath = str_repeat('../', count($parts));
+		}
+	}
+	header("Location: " . $relPath . "setup/index.php");
+	exit;
+}
 
 $CONF['local'] = "127.0.0.1";
 $CONF['user'] = "root";
@@ -49,22 +64,6 @@ $util = $_util;
 $dbase = newAdoConnection('mysqli');//conexao real, use $dbase->$conn para o resto
 global $dbase;
 if (!$dbase->connect($CONF['local'], $CONF['user'], $CONF['pass'], $CONF['bd'])) {
-	$lockFile = dirname(__DIR__, 2) . '/setup/install.lock';
-	if (!file_exists($lockFile) && strpos($_SERVER['SCRIPT_NAME'], '/setup/') === false) {
-		$rootPath = realpath(dirname(__DIR__, 2));
-		$scriptPath = realpath(dirname($_SERVER['SCRIPT_FILENAME']));
-		$relPath = '';
-		if ($rootPath && $scriptPath && strpos($scriptPath, $rootPath) === 0) {
-			$subPath = substr($scriptPath, strlen($rootPath));
-			$subPath = trim($subPath, DIRECTORY_SEPARATOR);
-			if (!empty($subPath)) {
-				$parts = explode(DIRECTORY_SEPARATOR, $subPath);
-				$relPath = str_repeat('../', count($parts));
-			}
-		}
-		header("Location: " . $relPath . "setup/index.php");
-		exit;
-	}
 	die("Database connection failed: " . $dbase->ErrorMsg());
 }
 //$dbase->debug = true;
