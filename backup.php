@@ -16,7 +16,7 @@ if ($mysqli->connect_errno) {
 // Definindo cabeçalho para download do arquivo
 $arquivo = $dbname . ".sql";
 header('Content-Type: application/sql; charset=utf-8');
-header('Content-Disposition: attachment; filename=' . $arquivo);
+header('Content-Disposition: attachment; filename="' . $arquivo . '"');
 header('Pragma: no-cache');
 header('Expires: 0');
 
@@ -73,12 +73,16 @@ while ($row = $res->fetch_array()) {
 
         $values = [];
         foreach ($r as $reg) {
-            if ($checkUtf) {
-                $escaped = str_replace("'", "\\'", str_replace("\\", "\\\\", preg_replace($regex1, '$1', $reg)));
+            if ($reg === null) {
+                $values[] = "NULL";
             } else {
-                $escaped = str_replace("'", "\\'", str_replace("\\", "\\\\", $reg));
+                if ($checkUtf) {
+                    $escaped = str_replace("'", "\\'", str_replace("\\", "\\\\", preg_replace($regex1, '$1', $reg)));
+                } else {
+                    $escaped = str_replace("'", "\\'", str_replace("\\", "\\\\", $reg));
+                }
+                $values[] = "'" . $escaped . "'";
             }
-            $values[] = "'" . $escaped . "'";
         }
         $sql .= "(" . implode(", ", $values) . ")";
     }

@@ -86,20 +86,20 @@ $dados = $_class->getList($where, '', $ordem);
                      </div>
                      <div class="widget-body form">
                         <?php
-$lib = '.';
-require_once($lib.'/lib/classes/class.utilidades.php');
-$util = new utilidades();
-$util->generate_csrf_token();
-?>
+                        $lib = '.';
+                        require_once($lib . '/lib/classes/class.utilidades.php');
+                        $util = new utilidades();
+                        $util->generate_csrf_token();
+                        ?>
                         <!-- BEGIN FORM-->
-                        <form action="#" class="form-horizontal">
-                            <?= $util->get_csrf_token_html() ?>
+                        <form action="#" class="form-horizontal" autocomplete="off">
+                           <?= $util->get_csrf_token_html() ?>
 
                            <div class="control-group"
                               style="margin-left: 0px; margin-right: 0px; border: 2px solid; border-radius: 10px;">
                               <div class="controls span4"
                                  style="margin-left: 15px; margin-right: 0px; margin-top: 10px; margin-bottom: 10px;">
-                                 <input type="hidden" name="cliente" id="cliente" value="5">
+                                 <input type="hidden" name="cliente" id="cliente" value="1">
                                  <select name="produto" id="produto" data-placeholder="Selecione"
                                     class="chosen-with-diselect span10" tabindex="1"
                                     onChange="getProdutoId(this.value)">
@@ -126,7 +126,7 @@ $util->generate_csrf_token();
                                        <label for="codigo"
                                           style="margin-left: 15px; margin-right: 0px; margin-top: 10px; margin-bottom: 5px;"><b>Código</b></label>
                                        <input type="text" name="codigo" id="codigo" tabindex="2" placeholder="Código"
-                                          onclick="this.value=''"
+                                          onclick="this.value=''" autocomplete="off"
                                           style="margin-left: 15px; margin-right: 0px; margin-top: 2px; margin-bottom: 10px; width: 20%; height: 30px;">
                                        <span id="desc_produto" style="margin-left: 8px"></span>
                                     </div>
@@ -138,10 +138,10 @@ $util->generate_csrf_token();
                                     <div class="controls"
                                        style="margin-left: 15px; margin-right: 0px; margin-top: 10px; margin-bottom: 10px;">
                                        <input type="text" name="peso" id="peso" tabindex="3" readonly="readonly"
-                                          placeholder="Qtd / Peso (kg)"
+                                          placeholder="Qtd / Peso (kg)" autocomplete="off"
                                           style="margin-left: 15px; margin-right: 0px; margin-top: 4px; margin-bottom: 10px; height: 40px; width: 17%;">
 
-                                       <input type="number" name="qtd" id="qtd" tabindex="3" placeholder="Qtd"
+                                       <input type="number" name="qtd" id="qtd" tabindex="3" placeholder="Qtd" autocomplete="off"
                                           style="margin-left: 15px; margin-right: 0px; margin-top: 4px; margin-bottom: 10px; height: 40px; width: 17%; display: none;">
 
 

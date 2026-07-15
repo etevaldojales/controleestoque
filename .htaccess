@@ -1,12 +1,4 @@
-<IfModule mod_php.c>
-    php_value session.name "CONTROLEESTOQUE_SESS"
-    php_value session.cookie_path "/controleestoque/"
-</IfModule>
-<IfModule mod_php7.c>
-    php_value session.name "CONTROLEESTOQUE_SESS"
-    php_value session.cookie_path "/controleestoque/"
-</IfModule>
-<IfModule mod_php8.c>
-    php_value session.name "CONTROLEESTOQUE_SESS"
-    php_value session.cookie_path "/controleestoque/"
-</IfModule>
+# Configurações de sessão removidas deste arquivo.
+# O Controle de Estoque agora gerencia o session.cookie_path e o session.name
+# de forma dinâmica diretamente no arquivo lib/classes/config.php, permitindo
+# que o sistema funcione em qualquer pasta ou domínio sem edições manuais.

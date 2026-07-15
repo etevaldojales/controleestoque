@@ -10,7 +10,7 @@ $_pedido = new pedido($dbase);
 $_produto = new produto($dbase);
 $_util = new utilidades();
 
-$idcli = $_class->getClientePdv();
+$idcli = !empty($_POST['idcliente']) ? intval($_POST['idcliente']) : $_class->getClientePdv();
 //echo "id_cliente: " . $idcli;
 $cliente = $_class->get($idcli);
 // verificar pedido do cliente em aberto

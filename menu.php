@@ -62,12 +62,17 @@ function is_page_active($url, $current_page) {
 		}
 	}
 	?>
-    <li>
-    	<a class="" href="javascript: void(0)" onclick="document.getElementById('frmgrbck').submit()">
-            <span class="icon-box"><i class="icon-save"></i></span>Backup
-        </a>
-	</li>
+    <?php if (isset($_SESSION["tipo_usuario"]) && $_SESSION["tipo_usuario"] == 1) { ?>
+        <li>
+        	<a class="" href="backup.php" download="controlestoque.sql">
+                <span class="icon-box"><i class="icon-save"></i></span>Backup
+            </a>
+    	</li>
+        <li class="<?= is_page_active('restaurar_backup.php', $current_page) ? 'active' : '' ?>">
+            <a class="" href="restaurar_backup.php">
+                <span class="icon-box"><i class="icon-undo"></i></span>Restaurar Backup
+            </a>
+        </li>
+    <?php } ?>
 </ul>
-<iframe name="frmbackup" id="frmbackup" src="#" width="300" height="300" frameborder="0" style="display:none"></iframe>
-<form name="frmgrbck" id="frmgrbck" action="backup.php" method="post" target="frmbackup"></form>
 

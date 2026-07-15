@@ -66,7 +66,7 @@ $emp = $_class->get(1);
             <div class="row-fluid">
                <div class="span12">
 
-                  <h3 class="page-title"><?= $emp['nome'] ?></h3>
+                  <h3 class="page-title"><?= isset($emp['nome']) ? htmlspecialchars($emp['nome']) : 'Controle de Estoque' ?></h3>
                </div>
             </div>
             <!-- END PAGE HEADER-->
@@ -101,7 +101,7 @@ $emp = $_class->get(1);
                      </div>
                      <div class="widget-body form"
                         style="margin-top: 1%; width: 57%; margin-left: 20%; border-radius: 30px; text-align: center;">
-                        <img src="uploads/<?= !empty($emp['logo']) ? htmlspecialchars($emp['logo']) : 'logo.png' ?>" alt="">
+                        <img src="uploads/<?= (!empty($emp) && !empty($emp['logo'])) ? htmlspecialchars($emp['logo']) : 'logo.png' ?>" alt="">
                      </div>
 
                   </div>
