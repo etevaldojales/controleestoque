@@ -1,17 +1,19 @@
 <?php
 include("config_inicio.php");
 $_secoes 	= new secoes($dbase);
-$codusu		= $_POST["usuario"];
-$sec 		= $_POST['chksecao'];
+$codusu		= $_POST["usuario"] ?? 0;
+$sec 		= $_POST['chksecao'] ?? [];
 
 $retus 		= $_secoes->deleteUsuSecao($codusu);
 $retusb		= $_secoes->deleteUsuSubSecao($codusu);
 $cont = count($sec);
+$msg = 0;
 for($i=0;$i<$cont;$i++) {
 	if($sec[$i] != "") {
 		$dados 	= explode("_",$sec[$i]);
 		$res 	= $_secoes->insertUsuSecao($codusu,$dados[0]); 
-		$resb 	= $_secoes->insertUsuSubSecao($codusu,$dados[0],$dados[1]); 
+		$subsecao = isset($dados[1]) ? $dados[1] : 0;
+		$resb 	= $_secoes->insertUsuSubSecao($codusu,$dados[0],$subsecao); 
 		$msg = 1;
 	}
 }

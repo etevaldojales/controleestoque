@@ -682,15 +682,47 @@ function concluirPedidoRe() {
 
 function concluirPedidoPdv(id, valor, valorc, valorv) {
   codpedido = id;
-  if (document.getElementById("formpag1").checked == true) {
-    formpg = 1;
-  } else if (document.getElementById("formpag2").checked == true) {
-    formpg = 2;
-  } else if (document.getElementById("formpag3").checked == true) {
-    formpg = 3;
-  } else if (document.getElementById("formpag4").checked == true) {
-    formpg = 4;
+
+  function parseMoney(value) {
+    if (!value) return 0;
+    var cleanValue = value.replace(/\./g, '').replace(',', '.');
+    var parsed = parseFloat(cleanValue);
+    return isNaN(parsed) ? 0 : parsed;
   }
+
+  function formatMoney(value) {
+    return value.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  var multiplas = document.getElementById("chk_multiplas") && document.getElementById("chk_multiplas").checked;
+  var formpg = 0;
+  var val_din = 0;
+  var val_car = 0;
+  var val_px = 0;
+
+  if (multiplas) {
+    formpg = 5; // Múltiplas
+    val_din = parseMoney(document.getElementById("val_dinheiro").value);
+    val_car = parseMoney(document.getElementById("val_cartao").value);
+    val_px = parseMoney(document.getElementById("val_pix").value);
+    
+    var totalPago = val_din + val_car + val_px;
+    if (totalPago < valor) {
+      alert("Valor pago (R$ " + formatMoney(totalPago) + ") é inferior ao total do pedido (R$ " + formatMoney(valor) + ")!");
+      return;
+    }
+  } else {
+    if (document.getElementById("formpag1").checked == true) {
+      formpg = 1;
+    } else if (document.getElementById("formpag2").checked == true) {
+      formpg = 2;
+    } else if (document.getElementById("formpag3").checked == true) {
+      formpg = 3;
+    } else if (document.getElementById("formpag4").checked == true) {
+      formpg = 4;
+    }
+  }
+
   numparc = document.getElementById("numparc").value;
   pvenc = document.getElementById("primvenc").value;
   obs = document.getElementById("obs").value;
@@ -708,6 +740,10 @@ function concluirPedidoPdv(id, valor, valorc, valorv) {
       valorvenda: valorv,
       data: data,
       formpag: formpg,
+      val_dinheiro: val_din,
+      val_cartao: val_car,
+      val_pix: val_px,
+      is_multiplas: multiplas ? 1 : 0
     },
     success: function (response) {
       console.log(response);

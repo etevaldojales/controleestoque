@@ -63,21 +63,28 @@ function validaRe()
 		if (xhReq.responseText != '')
 		{
 			resposta = parseXMLResponse(xhReq);
-			obj = resposta.getElementsByTagName('retorno');
-
-			// verifica o campo mensagem do XML, se for 1 ï¿½ que inseriu OK, caso contrï¿½rio, ï¿½ erro.
-			if (obj[0].getElementsByTagName("mensagem")[0].firstChild.nodeValue == 1)
+			if (resposta)
 			{
-				showToast('Dados salvos com sucesso!', 'success');
-				limpacampos();
-				listar(pagina);
+				obj = resposta.getElementsByTagName('retorno');
+
+				// verifica o campo mensagem do XML, se for 1 é que inseriu OK, caso contrário, é erro.
+				if (obj[0].getElementsByTagName("mensagem")[0].firstChild.nodeValue == 1)
+				{
+					showToast('Dados salvos com sucesso!', 'success');
+					limpacampos();
+					listar(pagina);
+				}
+				else if(obj[0].getElementsByTagName("mensagem")[0].firstChild.nodeValue == 2) {
+					showToast('Usuário já cadastrado', 'warning');
+					limpacampos();
+				}
+				else {
+					showToast('Falha ao salvar dados', 'error');	
+				}
 			}
-			else if(obj[0].getElementsByTagName("mensagem")[0].firstChild.nodeValue == 2) {
-				showToast('Usuário já cadastrado', 'warning');
-				limpacampos();
-			}
-			else {
-				showToast('Falha ao salvar dados', 'error');	
+			else
+			{
+				showToast('Falha ao processar resposta do servidor', 'error');
 			}
 		}
 	}
@@ -152,18 +159,25 @@ function excluirRe()
 		if (xhReq.responseText != '')
 		{
 			resposta = parseXMLResponse(xhReq);
-			obj = resposta.getElementsByTagName('retorno');
-			if (obj[0].firstChild) 
+			if (resposta)
 			{
-				if (obj[0].firstChild.nodeValue == '1') 
+				obj = resposta.getElementsByTagName('retorno');
+				if (obj[0] && obj[0].firstChild) 
 				{
-					showToast('Registro excluído com sucesso!', 'success');
-					listar(pagina);					
+					if (obj[0].firstChild.nodeValue == '1') 
+					{
+						showToast('Registro excluído com sucesso!', 'success');
+						listar(pagina);					
+					}
+					else
+					{
+						showToast('Houve um erro ao excluir dados', 'error');	
+					}
 				}
-				else
-				{
-					showToast('Houve um erro ao excluir dados', 'error');	
-				}
+			}
+			else
+			{
+				showToast('Falha ao processar resposta do servidor', 'error');
 			}
 		}
 	}
@@ -182,18 +196,25 @@ function excluirImagemRe()
 		if (xhReq.responseText != '')
 		{
 			resposta = parseXMLResponse(xhReq);
-			obj = resposta.getElementsByTagName('retorno');
-			if (obj[0].firstChild) 
+			if (resposta)
 			{
-				if (obj[0].firstChild.nodeValue == '1') 
+				obj = resposta.getElementsByTagName('retorno');
+				if (obj[0] && obj[0].firstChild) 
 				{
-					showToast('Foto excluída com sucesso!', 'success');
-					editar(document.getElementById('id').value);
+					if (obj[0].firstChild.nodeValue == '1') 
+					{
+						showToast('Foto excluída com sucesso!', 'success');
+						editar(document.getElementById('id').value);
+					}
+					else
+					{
+						showToast('Houve um erro ao excluir dados', 'error');	
+					}
 				}
-				else
-				{
-					showToast('Houve um erro ao excluir dados', 'error');	
-				}
+			}
+			else
+			{
+				showToast('Falha ao processar resposta do servidor', 'error');
 			}
 		}
 	}

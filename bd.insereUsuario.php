@@ -7,13 +7,13 @@ require_once($lib.'classes/class.usuario.php');
 $_class    	= new usuario($dbase);
 ;
 
-$nome      	= $_POST["nome_usu"];
-$email     	= $_POST["email_usu"];
-$fone     	= $_POST["fone_usu"];
-$login     	= $_POST["login_usu"];
-$senha     	= $_POST["senha_usu"] != "" ? md5($_POST["senha_usu"]) : "";
-$tipo     	= $_POST["tipo_usu"];
-$id			= $_POST["id"];
+$nome      	= $_POST["nome_usu"] ?? "";
+$email     	= $_POST["email_usu"] ?? "";
+$fone     	= $_POST["fone_usu"] ?? "";
+$login     	= $_POST["login_usu"] ?? "";
+$senha     	= isset($_POST["senha_usu"]) && $_POST["senha_usu"] != "" ? md5($_POST["senha_usu"]) : "";
+$tipo     	= $_POST["tipo_usu"] ?? "";
+$id			= $_POST["id"] ?? 0;
 
 if($id == 0) {
 	if($_class->verifica($_util->codificaAjaxSql($nome))) {

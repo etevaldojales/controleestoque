@@ -4,6 +4,26 @@ require_once($lib . 'classes/class.empresa.php');
 $_class = new empresa($dbase);
 $emp = $_class->get(1);
 //print_r($emp);
+
+// Verificar se é necessário rodar o backup (se o último tiver mais de 12 horas)
+$backupNecessario = false;
+$backupDir = __DIR__ . '/backups';
+$arquivos = glob($backupDir . '/db_backup_*.sql');
+
+if (empty($arquivos)) {
+    $backupNecessario = true;
+} else {
+    // Ordena os backups pelo tempo de modificação para pegar o mais recente (mais novo primeiro)
+    usort($arquivos, function($a, $b) {
+        return filemtime($b) - filemtime($a);
+    });
+    $ultimoBackup = $arquivos[0];
+    
+    // Se o último backup tem mais de 12 horas (43200 segundos)
+    if ((time() - filemtime($ultimoBackup)) > 43200) {
+        $backupNecessario = true;
+    }
+}
 ?>
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
@@ -152,10 +172,23 @@ $emp = $_class->get(1);
 
    <script src="js/scripts.js"></script>
    <script>
-      jQuery(document).ready(function () {
-         // initiate layout and plugins
-         App.init();
-      });
+       jQuery(document).ready(function () {
+          // initiate layout and plugins
+          App.init();
+          <?php if ($backupNecessario): ?>
+          console.log("Iniciando backup em segundo plano...");
+          $.ajax({
+             url: 'cron_backup.php',
+             type: 'GET',
+             success: function(response) {
+                console.log("Backup automático executado com sucesso.");
+             },
+             error: function() {
+                console.log("Falha ao rodar o backup automático em segundo plano.");
+             }
+          });
+          <?php endif; ?>
+       });
    </script>
    <!-- END JAVASCRIPTS -->
    <script type="text/javascript" src="assets/uniform/jquery.uniform.min.js"></script>
