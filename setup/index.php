@@ -32,6 +32,54 @@ function get_current_config() {
     return $config;
 }
 
+function get_db_connection($host, $user, $pass, $dbName, &$errorMsg) {
+    $link = @mysqli_connect($host, $user, $pass);
+    if (!$link) {
+        $errorMsg = mysqli_connect_error();
+        return false;
+    }
+    
+    $db_selected = false;
+    try {
+        $db_selected = @mysqli_select_db($link, $dbName);
+    } catch (Throwable $e) {
+        $db_selected = false;
+    }
+    
+    if (!$db_selected) {
+        $dbNameEscaped = mysqli_real_escape_string($link, $dbName);
+        $create_query = "CREATE DATABASE IF NOT EXISTS `$dbNameEscaped` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci";
+        
+        $created = false;
+        try {
+            $created = @mysqli_query($link, $create_query);
+        } catch (Throwable $e) {
+            $created = false;
+        }
+        
+        if (!$created) {
+            $errorMsg = 'Não foi possível criar o banco de dados: ' . mysqli_error($link);
+            @mysqli_close($link);
+            return false;
+        }
+        
+        $db_selected = false;
+        try {
+            $db_selected = @mysqli_select_db($link, $dbName);
+        } catch (Throwable $e) {
+            $db_selected = false;
+        }
+        
+        if (!$db_selected) {
+            $errorMsg = 'Não foi possível selecionar o banco de dados recém-criado: ' . mysqli_error($link);
+            @mysqli_close($link);
+            return false;
+        }
+    }
+    
+    return $link;
+}
+
 function executeSqlFile($link, $filePath) {
     if (!file_exists($filePath)) {
         throw new Exception("Arquivo de instalação '$filePath' não encontrado.");
@@ -85,22 +133,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action'])) {
             exit;
         }
         
-        // Connect to mysql server
-        $link = @mysqli_connect($host, $user, $pass);
+        $error = '';
+        $link = get_db_connection($host, $user, $pass, $name, $error);
         if (!$link) {
-            echo json_encode(['success' => false, 'error' => mysqli_connect_error()]);
+            echo json_encode(['success' => false, 'error' => $error]);
             exit;
-        }
-        
-        // Select or create DB
-        $db_selected = @mysqli_select_db($link, $name);
-        if (!$db_selected) {
-            $create_query = "CREATE DATABASE IF NOT EXISTS `" . mysqli_real_escape_string($link, $name) . "` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci";
-            if (!@mysqli_query($link, $create_query)) {
-                echo json_encode(['success' => false, 'error' => 'Não foi possível criar o banco de dados: ' . mysqli_error($link)]);
-                @mysqli_close($link);
-                exit;
-            }
         }
         @mysqli_close($link);
         
@@ -129,10 +166,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action'])) {
     if ($action === 'install_db') {
         $config = get_current_config();
         
-        $link = @mysqli_connect($config['local'], $config['user'], $config['pass'], $config['bd']);
+        $error = '';
+        $link = get_db_connection($config['local'], $config['user'], $config['pass'], $config['bd'], $error);
         if (!$link) {
-            echo json_encode(['success' => false, 'error' => 'Erro de conexão com o banco salvo: ' . mysqli_connect_error()]);
+            echo json_encode(['success' => false, 'error' => 'Erro de conexão ou criação do banco: ' . $error]);
             exit;
+        }
+        
+        // Drop and recreate database to resolve any orphaned InnoDB tablespaces, ensuring clean table creation
+        $dbEsc = mysqli_real_escape_string($link, $config['bd']);
+        try {
+            @mysqli_query($link, "DROP DATABASE IF EXISTS `$dbEsc`");
+            @mysqli_query($link, "CREATE DATABASE `$dbEsc` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci");
+            @mysqli_select_db($link, $config['bd']);
+        } catch (Throwable $e) {
+            // Ignore failure if permission is restricted; fall back to dropping tables individually
         }
         
         mysqli_set_charset($link, 'utf8');
@@ -163,9 +211,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action'])) {
             exit;
         }
         
-        $link = @mysqli_connect($config['local'], $config['user'], $config['pass'], $config['bd']);
+        $error = '';
+        $link = get_db_connection($config['local'], $config['user'], $config['pass'], $config['bd'], $error);
         if (!$link) {
-            echo json_encode(['success' => false, 'error' => 'Erro de conexão: ' . mysqli_connect_error()]);
+            echo json_encode(['success' => false, 'error' => 'Erro de conexão ou criação do banco: ' . $error]);
             exit;
         }
         

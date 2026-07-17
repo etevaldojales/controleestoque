@@ -1,6 +1,6 @@
 <?php
-session_start();
 $lib = 'lib/';
+require_once($lib.'classes/config.php');
 require_once($lib.'classes/class.utilidades.php');
 $util = new utilidades();
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$util->validate_csrf_token()) {
@@ -25,7 +25,6 @@ $vlocal = trim(strip_tags($_POST['local'] ?? ''));
 $unidade = trim(strip_tags($_POST['unidade'] ?? ''));
 $num_nf = (int) ($_POST['num_nf'] ?? 0);
 
-require_once($lib.'classes/config.php');
 require_once($lib.'classes/class.produto.php');
 require_once($lib.'classes/class.estoque.php');
 require_once($lib.'classes/class.logs.php');

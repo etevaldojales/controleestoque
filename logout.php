@@ -1,6 +1,6 @@
 <?php
-session_start();
-session_unset();
+$lib = 'lib/';
+require_once($lib.'classes/config.php');
 session_destroy();
 ?>
 <script type="text/javascript">

@@ -1,5 +1,4 @@
-﻿<?php
-session_start();
+<?php
 $lib = 'lib/';
 require_once($lib.'classes/config.php');
 require_once($lib.'classes/class.utilidades.php');
