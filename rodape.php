@@ -3,7 +3,7 @@ $nome_loja = "";
 $ano = date("Y");
 if (file_exists("config_inicio.php")) {
 	require_once("config_inicio.php");
-	require_once($lib . 'classes/class.empresa.php');
+	require_once(__DIR__ . '/lib/classes/class.empresa.php');
 	$_class = new empresa($dbase);
 	$emp = $_class->get(1);
 
@@ -23,5 +23,5 @@ if (empty($nome_loja)) {
 
 <div id="footer">
 	<?php echo $nome_loja; ?><br>© Copyright
-	<?php echo $ano; ?> Jales Tecnologia
+	<?php echo $ano; ?> - Jales Tecnologia
 </div>

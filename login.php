@@ -25,7 +25,7 @@ $error = '';
 
 <body id="login-body">
   <div class="login-header">
-    <div id="logo" class="center" style="color:#FFF"><b>CONTROLE - ESTOQUE</b></div>
+    <div id="logo" class="center" style="color:#FFF"><b>CONTROLE - <span class="text-primary">ESTOQUE</span></b></div>
   </div>
   <div id="login">
     <!-- AJAX errors shown here -->
@@ -71,7 +71,8 @@ $error = '';
     </form>
   </div>
   <div id="login-copyright">
-    2024 © Controle Estoque
+    <?php echo "Controle Estoque"; ?><br>© Copyright
+    <?php echo date('Y'); ?> - Jales Tecnologia
   </div>
   <script src="js/jquery-1.8.3.min.js"></script>
   <script src="assets/bootstrap/js/bootstrap.min.js"></script>
