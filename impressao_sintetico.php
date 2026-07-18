@@ -36,7 +36,6 @@ $rsFpg = $dbase->query($sqlFpg);
 $dadosFpg = array();
 $totalGeralValor = 0;
 $totalGeralCusto = 0;
-$totalGeralQtd = 0;
 
 if ($rsFpg) {
     while (!$rsFpg->EOF) {
@@ -48,9 +47,19 @@ if ($rsFpg) {
         );
         $totalGeralValor += floatval($rsFpg->fields['total']);
         $totalGeralCusto += floatval($rsFpg->fields['total_custo']);
-        $totalGeralQtd += intval($rsFpg->fields['qtd']);
         $rsFpg->MoveNext();
     }
+}
+
+// Get actual quantity of distinct sales (orders)
+$sqlTotalQtd = "SELECT count(distinct p.id) as total_qtd ";
+$sqlTotalQtd .= "FROM tblparcela parc ";
+$sqlTotalQtd .= "INNER JOIN tblpedido p ON p.id = parc.id_pedido ";
+$sqlTotalQtd .= "$where_parc ";
+$rsTotalQtd = $dbase->query($sqlTotalQtd);
+$totalGeralQtd = 0;
+if ($rsTotalQtd && !$rsTotalQtd->EOF) {
+    $totalGeralQtd = intval($rsTotalQtd->fields['total_qtd']);
 }
 
 $totalGeralLucro = $totalGeralValor - $totalGeralCusto;

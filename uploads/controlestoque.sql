@@ -413,7 +413,7 @@ CREATE TABLE `usuarios` (
   `login` varchar(255) NOT NULL DEFAULT '',
   `senha` varchar(50) NOT NULL DEFAULT '',
   `email` varchar(100) DEFAULT NULL,
-  `nome` varchar(150) NOT NULL,
+  `nome` varchar(150) DEFAULT NULL,
   `telefone` varchar(25) DEFAULT NULL,
   `foto` varchar(60) DEFAULT NULL,
   `ativo` smallint(1) DEFAULT 0,

@@ -60,17 +60,6 @@ CREATE TABLE `subsecoes` (
 # Criação da Tabela : tblbancos
 #
 
-CREATE TABLE `tblbancos` (
-  `id` int(5) NOT NULL AUTO_INCREMENT,
-  `funcao` varchar(60) DEFAULT NULL,
-  `layout` varchar(60) DEFAULT NULL,
-  `stselecionado` smallint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
-
-#
-# Criação da Tabela : tblcategoria
-#
 
 CREATE TABLE `tblcategoria` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -330,9 +319,9 @@ CREATE TABLE `usuarios` (
   `id_usuario` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `login` varchar(255) NOT NULL DEFAULT '',
   `senha` varchar(50) NOT NULL DEFAULT '',
-  `email` varchar(100) NOT NULL,
+  `email` varchar(100) DEFAULT NULL,
   `nome` varchar(150) NOT NULL,
-  `telefone` varchar(25) NOT NULL,
+  `telefone` varchar(25) DEFAULT NULL,
   `foto` varchar(60) DEFAULT NULL,
   `ativo` smallint(1) DEFAULT '0',
   `tipo_usuario` smallint(1) DEFAULT '0',

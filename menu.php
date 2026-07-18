@@ -64,7 +64,7 @@ function is_page_active($url, $current_page) {
 	?>
     <?php if (isset($_SESSION["tipo_usuario"]) && $_SESSION["tipo_usuario"] == 1) { ?>
         <li>
-        	<a class="" href="backup.php" download="controlestoque.sql">
+        	<a class="" href="backup.php" download="<?= htmlspecialchars($CONF['bd']) ?>.sql">
                 <span class="icon-box"><i class="icon-save"></i></span>Backup
             </a>
     	</li>

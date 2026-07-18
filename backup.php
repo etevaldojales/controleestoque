@@ -1,9 +1,16 @@
 <?php
+include("config_inicio.php");
 
-$usuario 	= "root";
-$senha 		= "";
-$dbname 	= "controlestoque";
-$host       = "localhost";
+// Restringir acesso apenas a administradores (tipo_usuario = 1)
+if (!isset($_SESSION["tipo_usuario"]) || $_SESSION["tipo_usuario"] != 1) {
+    header("Location: index.php");
+    exit;
+}
+
+$usuario 	= $CONF['user'];
+$senha 		= $CONF['pass'];
+$dbname 	= $CONF['bd'];
+$host       = $CONF['local'];
 // use true se quiser remover caracteres que não sejam utf-8
 $checkUtf = false;
 
