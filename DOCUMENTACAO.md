@@ -126,10 +126,11 @@ Tabela de auditoria para todas as operações críticas do sistema.
 1.  O operador de caixa acessa a tela de **PDV** ([pdv.php](file:///c:/xampp/htdocs/controleestoque/pdv.php)).
 2.  Informa os itens da venda, que são adicionados dinamicamente em uma lista temporária por meio de requisições AJAX (`itens_pedido_pdv.php`).
 3.  Ao concluir a venda, a forma de pagamento, a quantidade de parcelas e o cliente são definidos.
+    *   **Múltiplas Formas de Pagamento:** É possível marcar o checkbox "Múltiplas Formas" para dividir o valor da venda entre Dinheiro, Cartão e Pix. Nesse cenário, os campos individuais para inserção de valor de cada modalidade são exibidos, e as opções padrão de seleção única são bloqueadas. Para facilitar o preenchimento rápido, os campos de entrada de valor possuem um comportamento dinâmico que limpa seu valor padrão de `0,00` ao receber o foco/clique (`onclick`). Além disso, o sistema calcula em tempo real o total pago, a diferença (Falta Pagar) ou o troco.
 4.  O sistema executa uma transação bancária no MySQL:
     *   Cria o registro em `tblpedido`.
     *   Move os itens temporários para `tblitenspedido`.
-    *   Gera as contas a receber na tabela `tblparcela` de acordo com o número de parcelas.
+    *   Gera as contas a receber na tabela `tblparcela` de acordo com a forma de pagamento (criando parcelas específicas correspondentes para cada valor pago nas múltiplas formas de pagamento).
     *   Insere registros de saída de produto na tabela `tblestoque`, recalculando o saldo (`qtdacumulado`).
 
 ### Fluxo de Auditoria (Logs)
@@ -148,6 +149,7 @@ $_logs->salvaLog($mensagem);
     *   **Resumo por Forma de Pagamento:** Calcula a quantidade de vendas, valor total, ticket médio e participação percentual de cada método.
     *   **Resumo Diário:** Agrupa as vendas de forma cronológica por dia.
 5. Apresenta cards informativos com KPIs gerais (Total Vendido, Qtd. Vendas, Ticket Médio).
+    *   *Consistência na Qtd. Vendas:* Para garantir que pedidos divididos em mais de uma forma de pagamento não inflem artificialmente o indicador, o cálculo da quantidade total de vendas utiliza uma consulta dedicada com contagem de chaves primárias distintas (`COUNT(DISTINCT p.id)`).
 6. Um botão de impressão permite enviar os mesmos parâmetros via formulário POST para [impressao_sintetico.php](file:///c:/xampp/htdocs/controleestoque/impressao_sintetico.php), que renderiza uma visualização limpa e aciona `window.print()`.
 
 ### Rotina de Backup Automático
