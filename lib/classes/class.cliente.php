@@ -167,12 +167,27 @@ class cliente {
 
     public function getClientePdv() {
         $sql = "select id from tblcliente where stativo = 1 and pdv_default = 1 LIMIT 1";
-        $rs = $this->db->query($sql);
+        $rs = @$this->db->query($sql);
 
         if ($rs !== false && !$rs->EOF) {
             return $rs->fields['id'];
         }
-        return 5; // Fallback to client ID 5 (Avulso)
+
+        // Try to search for a client named "Avulso"
+        $sqlAvulso = "select id from tblcliente where nome LIKE 'Avulso%' and stativo = 1 LIMIT 1";
+        $rsAvulso = $this->db->query($sqlAvulso);
+        if ($rsAvulso !== false && !$rsAvulso->EOF) {
+            return $rsAvulso->fields['id'];
+        }
+
+        // Try to get any active client
+        $sqlFirst = "select id from tblcliente where stativo = 1 LIMIT 1";
+        $rsFirst = $this->db->query($sqlFirst);
+        if ($rsFirst !== false && !$rsFirst->EOF) {
+            return $rsFirst->fields['id'];
+        }
+
+        return 1; // Fallback to client ID 1 (Avulso)
     }
     
 }

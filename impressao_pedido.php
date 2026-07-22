@@ -13,11 +13,11 @@ $_produto = new produto($dbase);
 $_pedido = new pedido($dbase);
 $_usu = new usuario($dbase);
 
-$idpedido = $_POST["idpedido"];
+$idpedido = isset($_POST["idpedido"]) && $_POST["idpedido"] !== "" ? $_POST["idpedido"] : (isset($_GET["idpedido"]) ? $_GET["idpedido"] : "");
 $pedido = $_pedido->get($idpedido);
 $empresa = $_class->get(1);
 $itens = $_pedido->getItens($idpedido);
-$usu = $_usu->get($pedido['id_usuario']);
+$usu = ($pedido && isset($pedido['id_usuario'])) ? $_usu->get($pedido['id_usuario']) : null;
 
 function formataNumero($num)
 {
@@ -68,7 +68,7 @@ function formataNumero($num)
                             <div class="portlet-body">
                                 <div class="span4">
                                     <h4>
-                                        <nobr><?= $empresa['descricao'] ?></nobr>
+                                        <nobr><?= isset($empresa['descricao']) ? $empresa['descricao'] : '' ?></nobr>
                                     </h4>
                                     
                                     <p>
